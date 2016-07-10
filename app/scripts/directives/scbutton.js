@@ -6,42 +6,30 @@
  * @description
  * # scButton
  */
-angular.module('postflopStatisticsApp')
-  .directive('scButton', function () {
-    return {
-      template: '<label type="button" class="btn {{tipo}} btn-xs">{{card}}</label>',
-      restrict: 'E',
-      replace: true,
-      scope: {
-      	card: '=',
-      	aceptados: '='
-      },
-      link: function postLink(scope, element) {
-        if(scope.card.length === 2){
-        	scope.tipo = 'btn-success';
-        }else{
-	        if(scope.card.indexOf('s') > 0){
-  	      	scope.tipo = 'btn-default';
-	        }else{
-	        	scope.tipo = 'btn-default';
-  	      }
-      	}
-				function functionToBeCalled () {
-					if(element.attr('class').indexOf('danger') > 0){
-						var index = scope.aceptados.indexOf(scope.card);
-						if (index > -1) {
-						    scope.aceptados.splice(index, 1);
-						}
-						console.log('borra!', scope.card, scope.aceptados);
-						element.attr('class', 'btn ' + scope.tipo + ' btn-xs');
-					}else{
-						scope.aceptados.push(scope.card);
-						console.log('agrega!', scope.card, scope.aceptados);
-						element.attr('class', 'btn btn-danger btn-xs');
-					}
-				}
+ angular.module('postflopStatisticsApp')
+ .directive('scButton', function () {
+ 	return {
+ 		template: '<label type="button"></label>',
+ 		restrict: 'E',
+ 		replace: true,
+ 		link: function postLink(scope, element, attrs) {
 
-				element.on('click', functionToBeCalled);
-      }
-    };
-  });
+ 			function getType(card){
+ 				return (card.length === 2) ?  'btn-success' : (card.indexOf('s') > 0) ? 'btn-default' : 'btn-default';
+ 			}
+
+ 			function eventButton() {
+ 				if(element.attr('class').indexOf('danger') > 0){
+ 					element.attr('class', 'btn ' + getType(attrs.card) + ' btn-xs');
+ 				}else{
+ 					element.attr('class', 'btn btn-danger btn-xs');
+ 				}
+ 				scope.handlerCard(attrs.card);
+ 			}
+
+ 			element.text(attrs.card);
+ 			element.attr('class', 'btn ' + getType(attrs.card) + ' btn-xs');
+ 			element.on('click', eventButton);
+ 		}
+ 	};
+ });

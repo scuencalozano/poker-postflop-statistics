@@ -7,7 +7,7 @@
 		<div class="col-md-8">
 			<div ng-repeat="column in matrix">
 				<div class="btn-group-justified">
-					<sc-button ng-repeat="row in column" card="matrix[$parent.$index][$index]" aceptados=aceptados></sc-button>
+					<sc-button ng-repeat="row in column" card="{{matrix[$parent.$index][$index]}}"></sc-button>
 				</div>
 			</div>
 		</div>

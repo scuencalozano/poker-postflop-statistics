@@ -24,5 +24,18 @@ angular.module('postflopStatisticsApp')
       ['A3o', 'K3o', 'Q3o', 'J3o', 'T3o', '93o', '83o', '73o', '63o', '53o', '43o', '33', '32s'],
       ['A2o', 'K2o', 'Q2o', 'J2o', 'T2o', '92o', '82o', '72o', '62o', '52o', '42o', '32o', '22']
   	];
-  	$scope.aceptados = ['sc'];
+
+  	$scope.aceptados = [];
+
+	$scope.handlerCard = function(card){
+		var index = $scope.aceptados.indexOf(card);
+		if (index > -1) {
+			$scope.aceptados.splice(index, 1);
+			console.log('borra:', card, $scope.aceptados);
+		}else{
+			$scope.aceptados.push(card);
+			console.log('agrega:', card, $scope.aceptados);
+		}
+	};
+
   });
