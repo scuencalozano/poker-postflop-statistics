@@ -23,6 +23,10 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/postflopStatistics', {
+        templateUrl: 'views/postflopstatistics.html',
+        controller: 'PostflopstatisticsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
