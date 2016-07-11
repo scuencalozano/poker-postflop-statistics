@@ -1,21 +1,42 @@
 
 
-<p>TABLERO: {{vm.basado}}</p>
+<p>TABLERO: basado: {{vm.basado}} porcentage: {{vm.porcentage}} %</p>
 
-<div class="container" >
+<div class="container-fluid" >
 	<div class="row">
 		<!-- tablero -->
-		<div class="col-md-8">
+		<div class="col-md-7"  style="border: 3px solid green;">
+
+			<!-- buttons tablero -->
 			<div ng-repeat="column in vm.matrix">
 				<div class="btn-group-justified">
 					<sc-button ng-repeat="row in column" card="{{vm.matrix[$parent.$index][$index]}}"></sc-button>
 				</div>
 			</div>
-			<div>
-			    <rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-options="vm.slider.options"></rzslider>
+
+			<div class="row">
+				<!-- select type basado -->
+				<div class="col-md-3" style="border: 3px solid green;">
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle"
+							type="button" id="dropdownTypePlayer" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							{{vm.tipoPlayer}}
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							<a ng-repeat="tipo in vm.typesPlayer" class="dropdown-item" ng-click="vm.cambiaTipoPlayer(tipo)">  {{tipo}} </a>
+						</div>
+					</div>
+				</div>
+
+				<!-- slider bar tool -->
+				<div class="col-md-9" style="border: 3px solid green;">
+				    <rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-options="vm.slider.options"></rzslider>
+				</div>
 			</div>
+
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-5">
 
 		</div>
 	</div>

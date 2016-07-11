@@ -85,3 +85,8 @@ body {
 #slider12c .slider-selection {
   background: yellow;
 }
+
+#dropdownTypePlayer{
+  /*margin-top: 20%;*/
+  margin: auto;
+}
