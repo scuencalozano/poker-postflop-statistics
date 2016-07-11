@@ -1,14 +1,18 @@
-<p>This is the postflopStatistics view.</p>
 
 
-<div class="container">
+<p>TABLERO: {{vm.basado}}</p>
+
+<div class="container" >
 	<div class="row">
 		<!-- tablero -->
 		<div class="col-md-8">
-			<div ng-repeat="column in matrix">
+			<div ng-repeat="column in vm.matrix">
 				<div class="btn-group-justified">
-					<sc-button ng-repeat="row in column" card="{{matrix[$parent.$index][$index]}}"></sc-button>
+					<sc-button ng-repeat="row in column" card="{{vm.matrix[$parent.$index][$index]}}"></sc-button>
 				</div>
+			</div>
+			<div>
+			    <rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-options="vm.slider.options"></rzslider>
 			</div>
 		</div>
 		<div class="col-md-4">

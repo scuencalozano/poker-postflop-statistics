@@ -11,7 +11,8 @@
 angular
   .module('postflopStatisticsApp', [
     'ngRoute',
-    'ngTouch'
+    'ngTouch',
+    'rzModule'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -25,7 +26,8 @@ angular
       })
       .when('/postflopStatistics', {
         templateUrl: 'views/postflopstatistics.html',
-        controller: 'PostflopstatisticsCtrl'
+        controller: 'PostflopstatisticsCtrl',
+        controllerAs: 'vm'
       })
       .otherwise({
         redirectTo: '/'
