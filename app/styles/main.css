@@ -95,3 +95,16 @@ body {
   padding-left: 0;
   padding-right: 0;
 }
+
+.btn-spade {
+  color: #fff;
+  background-color: #585858;
+  border-color: #424242;
+}
+.btn-spade:hover,
+.btn-spade.focus,
+.btn-spade.active {
+  color: #fff;
+  background-color: #A4A4A4;
+  border-color: #BDBDBD;
+}

@@ -20,7 +20,7 @@ angular.module('postflopStatisticsApp')
     				element.attr('class', 'btn btn-info btn-xs');
     				break;
         	case 's':
-    				element.attr('class', 'btn btn-info btn-xs');
+    				element.attr('class', 'btn btn-spade btn-xs');
     				break;
   				case 'h':
     				element.attr('class', 'btn btn-danger btn-xs');
