@@ -26,6 +26,8 @@
 	 	vm.tipoPlayer = vm.basado;
 
 	 	vm.shuffleButton = shuffleButton;
+	 	vm.clickBoard = clickBoard;
+
 	 	vm.cambiaTipoPlayer = cambiaTipoPlayer;
 	 	vm.porcentage = 0.0;
 	 	vm.typesPlayer = ['Card', 'Rock', 'Mouse', 'Monkey', 'Telephone', 'ABC', 'Lion',
@@ -44,6 +46,21 @@
 			['A4o', 'K4o', 'Q4o', 'J4o', 'T4o', '94o', '84o', '74o', '64o', '54o', '44', '43s', '42s'],
 			['A3o', 'K3o', 'Q3o', 'J3o', 'T3o', '93o', '83o', '73o', '63o', '53o', '43o', '33', '32s'],
 			['A2o', 'K2o', 'Q2o', 'J2o', 'T2o', '92o', '82o', '72o', '62o', '52o', '42o', '32o', '22']
+		];
+	 	vm.board = [
+			['Ad', 'As', 'Ah', 'Ac'],
+			['Kd', 'Ks', 'Kh', 'Kc'],
+			['Qd', 'Qs', 'Qh', 'Qc'],
+			['Jd', 'Js', 'Jh', 'Jc'],
+			['Td', 'Ts', 'Th', 'Tc'],
+			['9d', '9s', '9h', '9c'],
+			['8d', '8s', '8h', '8c'],
+			['7d', '7s', '7h', '7c'],
+			['6d', '6s', '6h', '6c'],
+			['5d', '5s', '5h', '5c'],
+			['4d', '4s', '4h', '4c'],
+			['3d', '3s', '3h', '3c'],
+			['2d', '2s', '2h', '2c']
 		];
 	 	vm.slider = {
 	 		min: 0,
@@ -216,6 +233,10 @@
 		function updatePorcentage(value){
 			value = Math.round(value * 1000) / 1000;
 			vm.porcentage = value <= 0.04 ? 0.0 : value >= 99.96 ? 100.0 : value;
+		}
+
+		function clickBoard(card){
+			console.log(card);
 		}
 	}
 

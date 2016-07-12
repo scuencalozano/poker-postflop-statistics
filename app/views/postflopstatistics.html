@@ -5,7 +5,7 @@
 <div class="container-fluid" >
 	<div class="row">
 		<!-- tablero -->
-		<div class="col-md-7"  style="border: 3px solid green;">
+		<div class="col-md-7">
 
 			<!-- buttons tablero -->
 			<div ng-repeat="column in vm.matrix">
@@ -16,7 +16,7 @@
 
 			<div class="row">
 				<!-- select type basado -->
-				<div class="col-md-3" style="border: 3px solid green;">
+				<div class="col-md-3">
 					<div class="dropdown">
 						<button class="btn btn-secondary dropdown-toggle"
 							type="button" id="dropdownTypePlayer" data-toggle="dropdown"
@@ -30,13 +30,20 @@
 				</div>
 
 				<!-- slider bar tool -->
-				<div class="col-md-9" style="border: 3px solid green;">
+				<div class="col-md-9">
 				    <rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-options="vm.slider.options"></rzslider>
 				</div>
 			</div>
 
 		</div>
-		<div class="col-md-5">
+		<div class="col-md-2" id="board">
+			<div ng-repeat="column in vm.board">
+				<div class="btn-group-justified">
+					<sc-button-board ng-repeat="row in column" card="{{vm.board[$parent.$index][$index]}}"></sc-button-board>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
 
 		</div>
 	</div>

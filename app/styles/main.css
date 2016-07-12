@@ -90,3 +90,8 @@ body {
   /*margin-top: 20%;*/
   margin: auto;
 }
+
+#board{
+  padding-left: 0;
+  padding-right: 0;
+}
