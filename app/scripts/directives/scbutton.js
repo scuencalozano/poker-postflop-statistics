@@ -17,8 +17,7 @@
  			var card = attrs.card;
  			element.text(card);
  			element.attr('id', 'card' + card);
- 			var typeButton = (card.length === 2) ?  'btn-success' : (card.indexOf('s') > 0) ? 'btn-default' : 'btn-default';
-			element.attr('class', 'btn ' + typeButton + ' btn-xs');
+ 			scope.vm.desactivaButton(element, card);
 
  			scope.click = function(){
  				scope.vm.shuffleButton(element, card);

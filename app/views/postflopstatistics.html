@@ -1,12 +1,12 @@
 
 
-<p>TABLERO: basado: {{vm.basado}} porcentage: {{vm.porcentage}} %</p>
 
 <div class="container-fluid" >
 	<div class="row">
 		<!-- tablero -->
 		<div class="col-md-7">
 
+			<p>TABLERO: basado: {{vm.basado}} porcent	age: {{vm.porcentage}} %</p>
 			<!-- buttons tablero -->
 			<div ng-repeat="column in vm.matrix">
 				<div class="btn-group-justified">
@@ -37,6 +37,10 @@
 
 		</div>
 		<div class="col-md-2" id="board">
+			<p>
+				board
+				<label type="button" class="btn btn-warning" ng-click="vm.clearBoard()" ng-disabled="!vm.boardActive.length">Clear</label>
+			</p>
 			<div ng-repeat="column in vm.board">
 				<div class="btn-group-justified">
 					<sc-button-board ng-repeat="row in column" card="{{vm.board[$parent.$index][$index]}}"></sc-button-board>
