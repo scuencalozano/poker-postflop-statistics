@@ -76,6 +76,10 @@ function PostflopstatisticsCtrl($scope, $document) {
  		}
  	};
 
+ 	// calculos
+ 	vm.calcula = calcula;
+ 	vm.messagePost = '';
+
  	/*
 	 * SEGUN LOS SIGUIENTES ARREGLOS SE DETERMINARA EL ORDEN EN QUE CARGARA EL SLIDER
 	 'Card', 'Rock', 'Mouse', 'Monkey', 'Telephone', 'ABC', 'Lion', 'Man', 'Whale', 'Eagle', 'Crow', 'ABC FO', 'Dice', 'Fish'
@@ -265,7 +269,7 @@ function PostflopstatisticsCtrl($scope, $document) {
 			desactivaButtonBoard(element, card);
 			var index = vm.boardActive.indexOf(card);
 			vm.boardActive.splice(index, 1);
-		}else if (vm.boardActive.length < 5){
+		}else if (vm.boardActive.length < limit){
 			activaButton(element);
 			vm.boardActive.push(card);
 		}
@@ -277,5 +281,45 @@ function PostflopstatisticsCtrl($scope, $document) {
 			desactivaButtonBoard(element, el);
 		});
 		vm.boardActive = [];
+	}
+
+	// recorre todos los seleccionados y crea un mensaje para enviarlo al servidor
+	// vamos a recoorrer todo el tablero y tomaremos los activos y los que no, para enviar siempre el mensaje mas pequeno
+	function calcula(){
+
+		var aceptados = [];
+		var noAcepatdos = [];
+
+		arraySlide.forEach(function(el){
+			var element = angular.element($document[0].querySelector('#card' + el));
+			if(element.attr('class').indexOf(classSelected) > -1){
+				aceptados.push(el);
+			}else{
+				noAcepatdos.push(el);
+			}
+		});
+
+		// si el message empieza con mas tomas los aceptados
+		var envia = aceptados.length < noAcepatdos.length ? '+' : '-';
+		var enviaArray = aceptados.length < noAcepatdos.length ? aceptados : noAcepatdos;
+		var enviaCards = '';
+		enviaArray.forEach(function(el){
+			var elMin = el.indexOf('o') > -1 ? el.substring(0, 2) : el;
+			enviaCards += elMin;
+		});
+
+		var enviaBoard = '';
+		vm.boardActive.forEach(function(el){
+			enviaBoard += el;
+		});
+
+		// test
+		// +8866K8sJ796s9664_Tc
+		// +AAKKAKsQQAKAJsAJAQsAQKQsKQATsATKJsKJKTsKT_Tc9h6h5c7c
+		// +AAKKAKsQQAKAJsAJAQsAQKQsKQATsATKJsKJKTsKT3365s83s73_
+		// -9382sT38362729282_
+		// -5262s7392sT2T4949382sT38362729282_5h7d9h3s
+		vm.messagePost = envia + enviaCards + '_' + enviaBoard;
+		console.log(vm.messagePost);
 	}
 }
