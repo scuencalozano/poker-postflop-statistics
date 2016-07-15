@@ -23,12 +23,8 @@ angular.module('postflopStatisticsApp')
           scope.muestraChild = false;
           scope.click = function(){
               scope.muestraChild = !scope.muestraChild;
-              // console.log(scope.muestraChild + 'click on ' + scope.i);
           };
         }
       }
     };
   });
-// recibe vm.mockResultado.infos
-
-
