@@ -106,6 +106,58 @@ function PostflopstatisticsCtrl($scope, $document) {
  		updateButtons();
  	});
 
+ 	/**
+ 		* 	RESULTADOS
+ 	**/
+ 	vm.nivelesPost 	= [
+ 										// NO MADE HANDS
+										'NADA_NADA',						//0     no mismo ni overcards ni nada
+										'PAIR_MESA',            //5     TIENE PAR LA MESA
+										'NADA_OVERCARDS',       //1
+										'NADA_ACE_HIGHT',       //2
+										'NADA_PRO_ESCALERA',   	//3     PUEDEN SER OVER O HIGT PERO SI LE FALTA UNA PARA ESCALERA ENTRA AQUI
+										'NADA_PRO_COLOR',       //4     PUEDEN SER OVERCARD, HIGT O PRO ESCALERA PERO SI LE FALTA UNA PARA COLOR MAYOR A DIEZ ENTRA ACA
+
+										// MADE HANDS
+										'WEAK_PAIR',            //5     TIENE PAR Y HAY DOS CARTAS MAS ALTAS EN EL BOARD... noooo se incluyen los pares en mesa
+										'MEDIUM_PAIR_BAJO',    	//6     PAR MEDIO TENGO CON EL BOARD SIN IMPORTAR EL KICKER
+										'TWO_PAIR_BAJO',       	//11    cuando hay un par en mesa es decir no vale ni pala question
+										'MEDIUM_PAIR_ALTO',    	//7     PAR MEDIO EN MANO OSEA SALIO UNA ALTA A MI PAR
+										'TOP_PAIR_BAJO',       	//8     par alto CON KICKER BAJO
+										'TOP_PAIR_ALTO',       	//9     par alto CON KICKER ALTO
+										'OVERPAIR',            	//10    over pair  PUES
+										'TWO_PAIR_ALTO',       	//12    cuando no hay par en mesa y uso mis dos propias
+										'THREE_KIND_TRIP',     	//13    HAY UN PAR EN MESA Y TU TIENES UNA MAS OSEA TRIO, no se incluyen trios en mesa sino como full o nada
+										'THREE_KIND_SET',      	//14    TIENES PAR EN MANO Y SALE EL SET EN EL BOARD
+										'STRAIGHT',            	//15
+										'FLUSH',               	//16
+										'FULL_HOUSE',  					//17
+										'PLUS'									//18 		incluye poker y escalera color
+										];
+
+	// mock basado yAA_Jh3s2h
+	var mockResultado1 = '{"board":"Jh3s2h","infos":[{"children":[{"children":[{"children":[],"i":"TWO_PAIR_ALTO_25.41"},{"children":[],"i":"OVERPAIR_65.67"},{"children":[],"i":"STRAIGHT_1.83"},{"children":[],"i":"FLUSH_2.52"},{"children":[],"i":"THREE_KIND_SET_4.57"}],"i":"OVERPAIR_76.99"},{"children":[{"children":[],"i":"TWO_PAIR_ALTO_89.43"},{"children":[],"i":"FULL_HOUSE_9.33"},{"children":[],"i":"FLUSH_1.24"}],"i":"TWO_PAIR_ALTO_19.4"},{"children":[{"children":[],"i":"FULL_HOUSE_18.84"},{"children":[],"i":"THREE_KIND_SET_80.06"},{"children":[],"i":"PLUS_1.11"}],"i":"THREE_KIND_SET_3.61"}],"i":"OVERPAIR_100.0"}],"rangoPre":"AA"}';
+								// {"board":"Jh3s2h","infos":[{"children":[{"children":[
+								// 																										{"children":[],"i":"TWO_PAIR_ALTO_25.41"},
+								// 																										{"children":[],"i":"OVERPAIR_65.67"},
+								// 																										{"children":[],"i":"STRAIGHT_1.83"},
+								// 																										{"children":[],"i":"FLUSH_2.52"},
+								// 																										{"children":[],"i":"THREE_KIND_SET_4.57"}
+								// 																										],
+								// 																			"i":"OVERPAIR_76.99"},
+
+								// 																			{"children":[{"children":[],"i":"TWO_PAIR_ALTO_89.43"},{"children":[],"i":"FULL_HOUSE_9.33"},{"children":[],"i":"FLUSH_1.24"}],"i":"TWO_PAIR_ALTO_19.4"},{"children":[{"children":[],"i":"FULL_HOUSE_18.84"},{"children":[],"i":"THREE_KIND_SET_80.06"},{"children":[],"i":"PLUS_1.11"}],"i":"THREE_KIND_SET_3.61"}]
+								// 																			,"i":"OVERPAIR_100.0"}
+								// 													]
+								// 													,"rangoPre":"AA"};
+
+
+   // mock basado en y55_As3h4c
+	var mockResultado2 = '{"board":"As3h4c","infos":[{"children":[{"children":[{"children":[],"i":"TWO_PAIR_BAJO_25.56"},{"children":[],"i":"WEAK_PAIR_59.69"},{"children":[],"i":"STRAIGHT_10.2"},{"children":[],"i":"THREE_KIND_SET_4.55"}],"i":"WEAK_PAIR_67.95"},{"children":[{"children":[],"i":"THREE_KIND_SET_69.88"},{"children":[],"i":"STRAIGHT_8.94"},{"children":[],"i":"FULL_HOUSE_19.29"},{"children":[],"i":"PLUS_1.88"}],"i":"THREE_KIND_SET_4.25"},{"children":[{"children":[],"i":"TWO_PAIR_BAJO_83.84"},{"children":[],"i":"STRAIGHT_7.69"},{"children":[],"i":"FULL_HOUSE_8.47"}],"i":"TWO_PAIR_BAJO_19.12"},{"children":[{"children":[],"i":"STRAIGHT_100.0"}],"i":"STRAIGHT_8.68"}],"i":"MEDIUM_PAIR_ALTO_100.0"}],"rangoPre":"55"}';
+
+	// la respuesta del servidor
+	vm.results = JSON.parse(mockResultado1);
+
 	// camibia el estado del button
 	function shuffleButton(element, card){
 		vm.basado = 'custom';
