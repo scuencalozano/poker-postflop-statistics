@@ -280,19 +280,19 @@ function PostflopstatisticsCtrl($scope, $document) {
 	function desactivaButtonBoard(element, card){
     	switch(card.substring(1)){
     		case 'd':
-				element.attr('class', 'btn btn-info btn-xs');
-				break;
+					element.attr('class', 'btn btn-info btn-xs');
+					break;
     		case 's':
-				element.attr('class', 'btn btn-spade btn-xs');
-				break;
-			case 'h':
-				element.attr('class', 'btn btn-danger btn-xs');
-				break;
-			case 'c':
-				element.attr('class', 'btn btn-success btn-xs');
-				break;
-			default:
-				element.attr('class', 'btn btn-default btn-xs');
+					element.attr('class', 'btn btn-spade btn-xs');
+					break;
+				case 'h':
+					element.attr('class', 'btn btn-danger btn-xs');
+					break;
+				case 'c':
+					element.attr('class', 'btn btn-success btn-xs');
+					break;
+				default:
+					element.attr('class', 'btn btn-default btn-xs');
 		}
 	}
 
@@ -358,45 +358,78 @@ function PostflopstatisticsCtrl($scope, $document) {
 		console.log(vm.messagePost);
 	}
 
-// case NivelesPostFlop.NADA_NADA:
-// 				return "N";
-// case NivelesPostFlop.NADA_OVERCARDS:
-// 				return "NO";
-// case NivelesPostFlop.NADA_ACE_HIGHT:
-// 				return "AH";
-// case NivelesPostFlop.PAIR_MESA:
-// 				return "PM";
-// case NivelesPostFlop.WEAK_PAIR:
-// 				return "WP";
-// case NivelesPostFlop.MEDIUM_PAIR_BAJO:
-// 				return "MPB";
-// case NivelesPostFlop.NADA_PRO_ESCALERA:
-// 				return "PE";
-// case NivelesPostFlop.NADA_PRO_COLOR:
-// 				return "PC";
-// case NivelesPostFlop.TWO_PAIR_BAJO:
-// 				return "DPB";
-// case NivelesPostFlop.MEDIUM_PAIR_ALTO:
-// 				return "MPA";
-// case NivelesPostFlop.TOP_PAIR_BAJO:
-// 				return "TPB";
-// case NivelesPostFlop.TOP_PAIR_ALTO:
-// 				return "TPA";
-// case NivelesPostFlop.OVERPAIR:
-// 				return "O";
-// case NivelesPostFlop.TWO_PAIR_ALTO:
-// 				return "DPA";
-// case NivelesPostFlop.THREE_KIND_TRIP:
-// 				return "TT";
-// case NivelesPostFlop.THREE_KIND_SET:
-// 				return "TS";
-// case NivelesPostFlop.STRAIGHT:
-// 				return "S";
-// case NivelesPostFlop.FLUSH:
-// 				return "C";
-// case NivelesPostFlop.FULL_HOUSE:
-// 				return "F";
-// case NivelesPostFlop.FOUR_OF_A_KIND:
-// 				return "P";
+	// solo es necesario una vez por cada mensaje
+	// le asigna el nombre real y calcula el porcentage
+		// var mockResultado1 = '{"infos":[
+		// 																{"c":[{"c":[{"c":[],"i":"WP_11886"},{"c":[],"i":"DPB_4685"},{"c":[],"i":"S_342"},{"c":[],"i":"TS_739"},{"c":[],"i":"C_358"},{"c":[],"i":"P_2"}],"i":"WP_18012"},{"c":[{"c":[],"i":"DPB_4150"},{"c":[],"i":"F_390"},{"c":[],"i":"C_51"},{"c":[],"i":"S_21"}],"i":"DPB_4612"},{"c":[{"c":[],"i":"TS_787"},{"c":[],"i":"F_175"},{"c":[],"i":"P_18"},{"c":[],"i":"C_15"},{"c":[],"i":"S_2"}],"i":"TS_997"},{"c":[{"c":[],"i":"C_144"}],"i":"C_144"},{"c":[{"c":[],"i":"S_111"},{"c":[],"i":"P_1"},{"c":[],"i":"C_1"}],"i":"S_113"}],"i":"WP_23878"},{"c":[{"c":[{"c":[],"i":"O_5972"},{"c":[],"i":"DPA_2377"},{"c":[],"i":"S_165"},{"c":[],"i":"TS_394"},{"c":[],"i":"C_196"}],"i":"O_9104"},{"c":[{"c":[],"i":"TS_369"},{"c":[],"i":"F_114"},{"c":[],"i":"P_14"},{"c":[],"i":"S_1"},{"c":[],"i":"C_4"}],"i":"TS_502"},{"c":[{"c":[],"i":"DPA_2059"},{"c":[],"i":"F_166"},{"c":[],"i":"C_30"},{"c":[],"i":"S_8"}],"i":"DPA_2263"},{"c":[{"c":[],"i":"C_63"}],"i":"C_63"},{"c":[{"c":[],"i":"S_37"}],"i":"S_37"}],"i":"O_11969"},{"c":[{"c":[{"c":[],"i":"F_689"},{"c":[],"i":"P_13"}],"i":"F_702"},{"c":[{"c":[],"i":"TS_3489"},{"c":[],"i":"P_106"},{"c":[],"i":"F_925"},{"c":[],"i":"S_23"},{"c":[],"i":"C_42"}],"i":"TS_4585"},{"c":[{"c":[],"i":"P_120"}],"i":"P_120"}],"i":"TS_5407"},{"c":[{"c":[{"c":[],"i":"DPA_2248"},{"c":[],"i":"F_215"},{"c":[],"i":"C_25"},{"c":[],"i":"S_7"},{"c":[],"i":"P_1"}],"i":"DPA_2496"},{"c":[{"c":[],"i":"F_204"},{"c":[],"i":"P_3"}],"i":"F_207"}],"i":"DPA_2703"},{"c":[{"c":[{"c":[],"i":"DPB_4399"},{"c":[],"i":"F_464"},{"c":[],"i":"C_54"},{"c":[],"i":"S_10"},{"c":[],"i":"P_1"}],"i":"DPB_4928"},{"c":[{"c":[],"i":"P_9"},{"c":[],"i":"F_482"}],"i":"F_491"}],"i":"DPB_5419"},{"c":[{"c":[{"c":[],"i":"P_121"}],"i":"P_121"}],"i":"P_121"},{"c":[{"c":[{"c":[],"i":"F_474"},{"c":[],"i":"P_17"}],"i":"F_491"},
+		// 																{"c":[{"c":[],"i":"P_12"}],"i":"P_12"}],"i":"F_503"
+		// 																}
+		// 																]
+		// 															}';
+	refactorMesage();
+
+	function refactorMesage(){
+		vm.results.infos.forEach(function (info){
+			evaluateChildren(info);
+		});
+	}
+
+	function evaluateChildren(father){
+		var infos = father.i.split('_');
+		father.i = getName(infos[0]);
+		father.v = parseInt(infos[1]);
+
+		var children = father.c;
+		children.forEach(function (child){
+			evaluateChildren(child);
+		});
+	}
+	function getName(letra){
+		switch(letra){
+			case 'N':
+							return 'no made';
+			case 'NO':
+							return 'overcards';
+			case 'AH':
+							return 'ace hight';
+			case 'PM':
+							return 'board pair';
+			case 'WP':
+							return 'weak pair';
+			case 'MPB':
+							return 'weak medium pair';
+			case 'PE':
+							return 'straight projet';
+			case 'PC':
+							return 'color project';
+			case 'DPB':
+							return 'weak two pair';
+			case 'MPA':
+							return 'hight medium pair';
+			case 'TPB':
+							return 'weak top pair';
+			case 'TPA':
+							return 'hight top pair';
+			case 'O':
+							return 'overpair';
+			case 'DPA':
+							return 'hight two pair';
+			case 'TT':
+							return 'three kind trip';
+			case 'TS':
+							return 'three kind set';
+			case 'S':
+							return 'straight';
+			case 'C':
+							return 'flush';
+			case 'F':
+							return 'full house';
+			case 'P':
+							return 'plus';
+			default:
+						console.log('ingresa info para:', letra);
+						return '';
+		}
+	}
 
 }
