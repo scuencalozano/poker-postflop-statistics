@@ -51,10 +51,17 @@
 		</div>
 
 			<!-- RESULTS -->
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<!-- <label type="button" class="btn btn-info" ng-click="vm.calcula()">Calcular</label>
 			<p>{{vm.messagePost}}</p> -->
-			<sc-resultados ng-repeat="result in vm.results.infos"children="result.children" i="result.i" estado="flop"></sc-resultados>
+			<sc-resultados ng-repeat="result in vm.results.infos" c="result.c" i="result.i" estado="flop"></sc-resultados>
+		</div>
+
+			<!-- RESULTS CONTROLES-->
+		<div class="col-md-1">
+			<!-- <label type="button" class="btn btn-info" ng-click="vm.calcula()">Calcular</label>
+			<p>{{vm.messagePost}}</p> -->
+			<!-- <sc-resultados ng-repeat="result in vm.results.infos" children="result.c" i="result.i" estado="flop"></sc-resultados> -->
 		</div>
 
 

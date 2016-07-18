@@ -13,7 +13,7 @@ angular.module('postflopStatisticsApp')
       restrict: 'E',
       replace: true,
       scope: {
-      	children: '=',
+      	c: '=',
       	i: '='
       },
       link: {
@@ -22,6 +22,7 @@ angular.module('postflopStatisticsApp')
           scope.typeButton = attrs.estado === 'flop' ? 'btn-info' : attrs.estado === 'turn' ? 'btn-danger' : 'btn-warning';
           scope.muestraChild = false;
           scope.click = function(){
+              console.log('clickeo', scope.i);
               scope.muestraChild = !scope.muestraChild;
           };
         }
