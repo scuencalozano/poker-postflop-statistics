@@ -1,5 +1,5 @@
 <div>
-	<label type="buttton" class="btn {{typeButton}} btn-xs" ng-click="click()">{{i}}</label>
+	<label type="buttton" class="btn {{typeButton}} btn-xs result" ng-click="click()">{{i}}</label>
 	<!-- <label ng-repeat="child in children" type="buttton" class="btn btn-default btn-sx">{{child.i}}</label> -->
 	<sc-resultados ng-repeat="child in children" children="child.children" i="child.i" estado="{{newEstado}}" ng-show="$parent.muestraChild">{{child.i}}</sc-resultados>
 </div>
