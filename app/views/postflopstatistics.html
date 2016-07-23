@@ -52,9 +52,9 @@
 
 			<!-- RESULTS -->
 		<div class="col-md-3">
-			<!-- <label type="button" class="btn btn-info" ng-click="vm.calcula()">Calcular</label>
-			<p>{{vm.messagePost}}</p> -->
-			<sc-resultados ng-repeat="result in vm.results.infos | orderBy:'-p'" result="result" estado="flop"></sc-resultados>
+			<label type="button" class="btn btn-info" ng-click="vm.calcula()">Calcular</label>
+			<p>{{vm.messagePost}}</p>
+			<sc-resultados ng-repeat="result in vm.results.infos | orderBy:'fuerza'" result="result" estado="flop"></sc-resultados>
 		</div>
 
 			<!-- RESULTS CONTROLES-->

@@ -1,5 +1,5 @@
 <div>
-	<label type="buttton" class="btn {{typeButton}} btn-xs result" ng-click="click()">{{result.i}} {{result.p}}%</label>
+	<label type="buttton" class="btn {{typeButton}} btn-xs result" ng-click="click()">{{result.info}} {{result.porc}}%</label>
 
-	<sc-resultados ng-repeat="result in result.c | orderBy:'-p'" result="result" estado="{{newEstado}}" ng-show="$parent.muestraChild"></sc-resultados>
+	<sc-resultados ng-repeat="result in result.c | orderBy:'fuerza'" result="result" estado="{{newEstado}}" ng-show="$parent.muestraChild"></sc-resultados>
 </div>
