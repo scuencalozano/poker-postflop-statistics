@@ -21,8 +21,10 @@ angular.module('postflopStatisticsApp')
           scope.typeButton = attrs.estado === 'flop' ? 'btn-info' : attrs.estado === 'turn' ? 'btn-danger' : 'btn-warning';
           scope.muestraChild = false;
           scope.click = function(){
-              // console.log('clickeo', scope.i);
-              scope.muestraChild = !scope.muestraChild;
+              if((scope.result.cCheck === '')){
+                scope.muestraChild = !scope.muestraChild;
+              }
+              scope.result.cCheck = (scope.result.cCheck === '') ? '' : (scope.result.cCheck.indexOf('-check') > -1) ? 'state-icon glyphicon glyphicon-unchecked' : 'state-icon glyphicon glyphicon-check';
           };
         }
       }

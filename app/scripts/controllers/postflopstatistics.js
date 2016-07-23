@@ -27,11 +27,16 @@ function PostflopstatisticsCtrl($scope, $document) {
  	vm.shuffleButton = shuffleButton;
  	vm.desactivaButton = desactivaButton;
 
+ 	// seleccionar always false
+ 	vm.seleccionar = false;
+ 	vm.activaSeleccionar = activaSeleccionar;
+
  	// board
  	vm.boardActive = [];
  	vm.clickBoard = clickBoard;
  	vm.clearBoard = clearBoard;
  	vm.desactivaButtonBoard = desactivaButtonBoard;
+
 
  	vm.cambiaTipoPlayer = cambiaTipoPlayer;
  	vm.porcentage = 0.0;
@@ -370,12 +375,13 @@ function PostflopstatisticsCtrl($scope, $document) {
 	}
 
 	function evaluateChildren(father, total){
-		var infos 		= father.i.split('_');
-		father.info 	= getName(infos[0]);
-		father.veces	= parseInt(infos[1]);
-		father.porc 	= Math.round((father.veces * 100 / total) * 10) / 10;
-		father.fuerza = ordenPost.indexOf(infos[0]);
-		var children 	= father.c;
+		var infos 			= father.i.split('_');
+		father.info 		= getName(infos[0]);
+		father.veces		= parseInt(infos[1]);
+		father.porc 		= Math.round((father.veces * 100 / total) * 10) / 10;
+		father.fuerza 	= ordenPost.indexOf(infos[0]);
+		father.cCheck 	= '';
+		var children 		= father.c;
 
 		children.forEach(function (child){
 			evaluateChildren(child, father.veces);
@@ -430,5 +436,20 @@ function PostflopstatisticsCtrl($scope, $document) {
 				return '';
 		}
 	}
+	function activaSeleccionar() {
+		vm.seleccionar = !vm.seleccionar;
+		vm.results.infos.forEach(function (info){
+			activaSeleccionarNodo(info, vm.seleccionar);
+		});
 
+		// recursive activaSeleccionarNodo
+		function activaSeleccionarNodo(nodo, seleccionar){
+			nodo.cCheck 	= seleccionar ? 'state-icon glyphicon glyphicon-unchecked' : '';
+			var children 	= nodo.c;
+
+			children.forEach(function (child){
+				activaSeleccionarNodo(child, seleccionar);
+			});
+		}
+	}
 }
