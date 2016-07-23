@@ -369,66 +369,72 @@ function PostflopstatisticsCtrl($scope, $document) {
 	refactorMesage();
 
 	function refactorMesage(){
+		var total = 0;
 		vm.results.infos.forEach(function (info){
-			evaluateChildren(info);
+			total += parseInt(info.i.split('_')[1]);
+		});
+
+		vm.results.infos.forEach(function (info){
+			evaluateChildren(info, total);
 		});
 	}
 
-	function evaluateChildren(father){
+	function evaluateChildren(father, total){
 		var infos = father.i.split('_');
 		father.i = getName(infos[0]);
 		father.v = parseInt(infos[1]);
-
+		father.p = Math.round((father.v * 100 / total) * 10) / 10;
 		var children = father.c;
 		children.forEach(function (child){
-			evaluateChildren(child);
+			evaluateChildren(child, father.v);
 		});
 	}
+
 	function getName(letra){
 		switch(letra){
 			case 'N':
-							return 'no made';
+				return 'no made';
 			case 'NO':
-							return 'overcards';
+				return 'overcards';
 			case 'AH':
-							return 'ace hight';
+				return 'ace hight';
 			case 'PM':
-							return 'board pair';
+				return 'board pair';
 			case 'WP':
-							return 'weak pair';
+				return 'weak pair';
 			case 'MPB':
-							return 'weak medium pair';
+				return 'weak medium pair';
 			case 'PE':
-							return 'straight projet';
+				return 'straight projet';
 			case 'PC':
-							return 'color project';
+				return 'color project';
 			case 'DPB':
-							return 'weak two pair';
+				return 'weak two pair';
 			case 'MPA':
-							return 'hight medium pair';
+				return 'hight medium pair';
 			case 'TPB':
-							return 'weak top pair';
+				return 'weak top pair';
 			case 'TPA':
-							return 'hight top pair';
+				return 'hight top pair';
 			case 'O':
-							return 'overpair';
+				return 'overpair';
 			case 'DPA':
-							return 'hight two pair';
+				return 'hight two pair';
 			case 'TT':
-							return 'three kind trip';
+				return 'three kind trip';
 			case 'TS':
-							return 'three kind set';
+				return 'three kind set';
 			case 'S':
-							return 'straight';
+				return 'straight';
 			case 'C':
-							return 'flush';
+				return 'flush';
 			case 'F':
-							return 'full house';
+				return 'full house';
 			case 'P':
-							return 'plus';
+				return 'plus';
 			default:
-						console.log('ingresa info para:', letra);
-						return '';
+				console.log('ingresa info para:', letra);
+				return '';
 		}
 	}
 
