@@ -387,7 +387,6 @@ function PostflopstatisticsCtrl($scope, $document) {
 	// recursive update de info of nodo
 	function updateNodo(nodo, total, estado, previo){
 		var infos 				= nodo.i.split('_');
-		nodo.i 						= infos[0];
 		nodo.info 				= getName(infos[0]);
 		nodo.veces				= parseInt(infos[1]);
 		nodo.porc 				= Math.round((nodo.veces * 100 / total) * 100) / 100;
@@ -546,6 +545,8 @@ function PostflopstatisticsCtrl($scope, $document) {
 		updatePorcSelects();
 	}
 
+	var numUnion = 0;
+
 	function union(){
 		console.log('padre: ', padreSeleccionados, ' seleccionados: ', seleccionados);
 
@@ -554,39 +555,56 @@ function PostflopstatisticsCtrl($scope, $document) {
 			var nodoB = seleccionados[i];
 			nodoA = une (nodoA, nodoB, padreSeleccionados);
 		}
-		nodoA.info = 'union';
 		padreSeleccionados.c.push(nodoA);
 		removeSelects();
+
+		numUnion++;
 	}
+
 
 	// recursive une
 	function une(nodoA, nodoB, nodoPadre){
+
+		var nombreUnion 	= 'union_' + numUnion;
+
 		var nodo 					= {};
-		nodo.info 				= nodoA.info;
+		nodo.info 				= (nodoPadre === padreSeleccionados) ? nombreUnion : nodoA.info;
 		nodo.veces				= nodoA.veces + nodoB.veces;
 		nodo.porc 				= Math.round((nodo.veces * 100 / nodoPadre.veces) * 100) / 100;
-		nodo.fuerza 			= -1;
+		nodo.fuerza 			= (nodoPadre === padreSeleccionados) ? -1 : nodoA.fuerza;
 		nodo.estado 			= nodoA.estado;
 		nodo.cCheck 			= 'state-icon glyphicon glyphicon-unchecked';
 		nodo.typeButton 	= (nodoPadre === padreSeleccionados) ? 'btn-spade' : nodoA.typeButton;
-    nodo.previo 			= nodoA.previo;
+    nodo.previo 			= (nodoPadre === padreSeleccionados) ? nodoA.previo : (nodoPadre.previo === '' ? nodoPadre.info : nodoPadre.previo + '-' + nodoPadre.info);
     nodo.muestra 			= nodoA.muestra;
-    nodo.c 						= nodoA.c.slice();
     nodo.click 				= getActionNodo(nodo);
 
-    // une los nodos iguales y los agrega
-  	nodoB.c.forEach(function (elB){
-  		var posicion = -1;
-  		nodo.c.forEach(function(el, i){
-  			if(el.info === elB.info){
-  				posicion = i;
-  			}
-  		});
-			if(posicion === -1){
-				nodo.c.push(elB);
-			}else{
-				nodo.c[posicion] = une(nodo.c[posicion], elB, nodo);
-			}
+    nodo.c 						= [];
+
+    // busca los nodos repetidos en los dos y los elimina
+    for(var a = 0; a < nodoA.c.length; a++){
+    	for(var b = 0; b < nodoB.c.length; b++){
+    		if(nodoA.c[a].info === nodoB.c[b].info){
+    			nodo.c.push(une(nodoA.c[a], nodoB.c[b], nodo));
+    			nodoA.c.splice(a, 1);a--;
+    			nodoB.c.splice(b, 1);b--;
+    			break;
+    		}
+    	}
+    }
+
+    // add los no repetidos de A
+    nodoA.c.forEach(function (el){
+			el.porc 	= Math.round((el.veces * 100 / nodo.veces) * 100) / 100;
+			el.previo = nodo.previo === '' ? nodo.info : nodo.previo + '-' + nodo.info;
+			nodo.c.push(el);
+		});
+
+    // add los no repetidos de B
+		nodoB.c.forEach(function (el){
+			el.porc = Math.round((el.veces * 100 / nodo.veces) * 100) / 100;
+			el.previo = nodo.previo === '' ? nodo.info : nodo.previo + '-' + nodo.info;
+			nodo.c.push(el);
 		});
 
     return nodo;
