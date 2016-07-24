@@ -52,19 +52,19 @@
 
 			<!-- RESULTS -->
 		<div class="col-md-3">
-			<label type="button" class="btn btn-warning" ng-click="vm.removeSelects()">Remove</label>
-			<label type="button" class="btn btn-danger" ng-click="vm.activaSeleccionar()">Seleccionar</label>
-			<p>{{vm.seleccionar}} sumaSeleccionados: {{vm.porcSeleccionados}}</p>
-			<label type="button" class="btn btn-info" ng-click="vm.calcula()">Calcular</label>
-			<p>{{vm.messagePost}}</p>
-			<sc-resultados ng-repeat="result in vm.results.infos | orderBy:'fuerza'"></sc-resultados>
+			<sc-resultados ng-repeat="result in vm.results.c | orderBy:'fuerza'"></sc-resultados>
 		</div>
 
 			<!-- RESULTS CONTROLES-->
 		<div class="col-md-1">
-			<!-- <label type="button" class="btn btn-info" ng-click="vm.calcula()">Calcular</label>
-			<p>{{vm.messagePost}}</p> -->
-			<!-- <sc-resultados ng-repeat="result in vm.results.infos" children="result.c" i="result.i" estado="flop"></sc-resultados> -->
+			<div class="btn-group-vertical">
+				<label type="button" class="btn btn-warning" ng-click="vm.removeSelects()">Remove</label>
+				<label type="button" class="btn btn-danger" ng-click="vm.activaSeleccionar()">Seleccionar</label>
+				<label type="button" class="btn btn-info" ng-click="vm.calcula()">Calcular</label>
+				<label type="button" class="btn btn-default" ng-click="vm.union()">Union</label>
+			</div>
+			<p>sumaSeleccionados: {{vm.porcSeleccionados}}</p>
+			<p>mensaje post: {{vm.messagePost}}</p>
 		</div>
 
 
