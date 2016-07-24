@@ -370,21 +370,35 @@ function PostflopstatisticsCtrl($scope, $document) {
 		});
 
 		vm.results.infos.forEach(function (info){
-			evaluateChildren(info, total);
+			updateNodo(info, total, 'flop', '');
 		});
 	}
 
-	function evaluateChildren(father, total){
-		var infos 			= father.i.split('_');
-		father.info 		= getName(infos[0]);
-		father.veces		= parseInt(infos[1]);
-		father.porc 		= Math.round((father.veces * 100 / total) * 10) / 10;
-		father.fuerza 	= ordenPost.indexOf(infos[0]);
-		father.cCheck 	= '';
-		var children 		= father.c;
+	function updateNodo(nodo, total, estado, previo){
+		var infos 				= nodo.i.split('_');
+		nodo.i 						= infos[0];
+		nodo.info 				= getName(infos[0]);
+		nodo.veces				= parseInt(infos[1]);
+		nodo.porc 				= Math.round((nodo.veces * 100 / total) * 100) / 100;
+		nodo.fuerza 			= ordenPost.indexOf(infos[0]);
+		nodo.estado 			= estado;
+		nodo.cCheck 			= '';
+		nodo.typeButton 	= estado === 'flop' ? 'btn-info' : estado === 'turn' ? 'btn-danger' : 'btn-warning';
+    nodo.previo 			= previo;
+    nodo.muestra 			= estado === 'flop';
+    nodo.click 				= function () {
+	    if(nodo.cCheck === ''){
+        // muestra los hijos
+				nodo.c.forEach(function (child){
+					child.muestra = true;
+				});
+      }else{
+        vm.addSeleccion(nodo);
+      }
+    };
 
-		children.forEach(function (child){
-			evaluateChildren(child, father.veces);
+		nodo.c.forEach(function (child){
+			updateNodo(child, nodo.veces, estado === 'flop' ? 'turn' : 'river', (previo === '') ? nodo.info : previo + '-' + nodo.info);
 		});
 	}
 
@@ -441,15 +455,68 @@ function PostflopstatisticsCtrl($scope, $document) {
 		vm.results.infos.forEach(function (info){
 			activaSeleccionarNodo(info, vm.seleccionar);
 		});
+	}
 
-		// recursive activaSeleccionarNodo
-		function activaSeleccionarNodo(nodo, seleccionar){
-			nodo.cCheck 	= seleccionar ? 'state-icon glyphicon glyphicon-unchecked' : '';
-			var children 	= nodo.c;
-
-			children.forEach(function (child){
-				activaSeleccionarNodo(child, seleccionar);
-			});
+	// recursive activaSeleccionarNodo
+	function activaSeleccionarNodo(nodo, seleccionar){
+		nodo.cCheck 	= seleccionar ? 'state-icon glyphicon glyphicon-unchecked' : '';
+		var children 	= nodo.c;
+		children.forEach(function (child){
+			activaSeleccionarNodo(child, seleccionar);
+		});
+		// los borra cuando desactiva seleccionar
+		if(!seleccionar){
+			seleccionados = [];
+			vm.porcSeleccionados = 0;
 		}
 	}
+
+
+	// recursive activaSeleccionarPrevio
+	function activaSeleccionarPrevio(nodo, previo){
+		nodo.cCheck 	= nodo.previo === previo ? nodo.cCheck : '';
+		var children 	= nodo.c;
+		children.forEach(function (child){
+			activaSeleccionarPrevio(child, previo);
+		});
+	}
+
+
+	vm.porcSeleccionados = 0;
+	var seleccionados = [];
+
+
+	vm.addSeleccion = function(result){
+
+		var add = result.cCheck.indexOf('-uncheck') > -1;
+  	result.cCheck = add ? 'state-icon glyphicon glyphicon-check' : 'state-icon glyphicon glyphicon-unchecked';
+
+		if(add){
+			seleccionados.push(result);
+		}else{
+			seleccionados.splice(seleccionados.indexOf(result), 1);
+		}
+
+		// habilitamos solo el check a sus brothers
+		if(seleccionados.length === 1 && add){
+			vm.results.infos.forEach(function (info){
+				activaSeleccionarPrevio(info, result.previo);
+			});
+		}
+
+		// activamos a todos para posible seleccion
+		if(seleccionados.length === 0 && !add){
+			vm.results.infos.forEach(function (info){
+				activaSeleccionarNodo(info, true);
+			});
+		}
+
+		var sumSeleccionados = 0;
+		seleccionados.forEach(function(el){
+			sumSeleccionados += el.porc;
+		});
+		vm.porcSeleccionados = sumSeleccionados;
+
+		console.log((add ? 'agrego: ' : 'borro: ') + result.info, result.porc, seleccionados);
+	};
 }

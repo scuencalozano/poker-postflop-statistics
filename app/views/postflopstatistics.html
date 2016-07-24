@@ -53,10 +53,10 @@
 			<!-- RESULTS -->
 		<div class="col-md-3">
 			<label type="button" class="btn btn-danger" ng-click="vm.activaSeleccionar()">Seleccionar</label>
-			<p>{{vm.seleccionar}}</p>
+			<p>{{vm.seleccionar}} sumaSeleccionados: {{vm.porcSeleccionados}}</p>
 			<label type="button" class="btn btn-info" ng-click="vm.calcula()">Calcular</label>
 			<p>{{vm.messagePost}}</p>
-			<sc-resultados ng-repeat="result in vm.results.infos | orderBy:'fuerza'" result="result" estado="flop"></sc-resultados>
+			<sc-resultados ng-repeat="result in vm.results.infos | orderBy:'fuerza'"></sc-resultados>
 		</div>
 
 			<!-- RESULTS CONTROLES-->

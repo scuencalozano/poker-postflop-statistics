@@ -1,4 +1,6 @@
 <div>
-	<label type="button" class="btn {{typeButton}} btn-xs result {{result.cCheck}}" ng-click="click()">{{result.info}} {{result.porc}}%</label>
-  <sc-resultados ng-repeat="result in result.c | orderBy:'fuerza'" result="result" estado="{{newEstado}}" ng-show="$parent.muestraChild" ></sc-resultados>
+	<label type="button" class="btn {{result.typeButton}} btn-xs result {{result.cCheck}}" ng-click="result.click()" ng-show="result.muestra">{{result.info}} {{result.porc}}%</label>
+	<span ng-if="result.c.length">
+		<sc-resultados ng-repeat="result in result.c | orderBy:'fuerza'"></sc-resultados>
+	</span>
 </div>
