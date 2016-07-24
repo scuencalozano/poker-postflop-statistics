@@ -111,4 +111,12 @@ body {
 
 .result{
   width: 100%;
+  text-align: left;
+  padding-left: 15px;
+}
+
+.resultPorcentage{
+  text-align: right;
+  position: absolute;
+  right: 25px;
 }
