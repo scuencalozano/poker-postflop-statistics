@@ -390,7 +390,7 @@ function PostflopstatisticsCtrl($scope, $document) {
 	    if(nodo.cCheck === ''){
         // muestra los hijos
 				nodo.c.forEach(function (child){
-					child.muestra = true;
+					child.muestra = !child.muestra;
 				});
       }else{
         vm.addSeleccion(nodo);
@@ -510,13 +510,37 @@ function PostflopstatisticsCtrl($scope, $document) {
 				activaSeleccionarNodo(info, true);
 			});
 		}
+		updatePorcSelects();
 
+		console.log((add ? 'agrego: ' : 'borro: ') + result.info, result.porc, seleccionados);
+	};
+
+	vm.removeSelects = function(){
+		vm.results.infos.forEach(function (nodo){
+			removeSi(nodo, vm.results.infos);
+		});
+		updatePorcSelects();
+	};
+
+	function updatePorcSelects(){
 		var sumSeleccionados = 0;
 		seleccionados.forEach(function(el){
 			sumSeleccionados += el.porc;
 		});
 		vm.porcSeleccionados = sumSeleccionados;
+	}
 
-		console.log((add ? 'agrego: ' : 'borro: ') + result.info, result.porc, seleccionados);
-	};
+	// recursive
+	function removeSi(nodo, arrayNodo){
+		if(seleccionados.indexOf(nodo) > -1){
+			console.log('va eliminar: ' + nodo.info +  ' posicion: ' + arrayNodo.indexOf(nodo));
+			arrayNodo.splice(arrayNodo.indexOf(nodo), 1);
+			seleccionados.splice(seleccionados.indexOf(nodo), 1);
+		}else{
+			nodo.c.forEach(function (child){
+				removeSi(child, nodo.c);
+			});
+		}
+	}
+
 }
