@@ -12,7 +12,8 @@ angular
   .module('postflopStatisticsApp', [
     'ngRoute',
     'ngTouch',
-    'rzModule'
+    'rzModule',
+    'ngjsColorPicker'
   ])
   .config(function ($routeProvider) {
     $routeProvider
