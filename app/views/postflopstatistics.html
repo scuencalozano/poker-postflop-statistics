@@ -59,7 +59,7 @@
 		<div class="col-md-1">
 			<div class="btn-group-vertical">
 				<label type="button" class="btn btn-info" ng-click="vm.calcula()" ng-show="!vm.autoCalculate">Calcular</label>
-				<label type="button" class="btn btn-danger" ng-click="vm.activaSeleccionar()">Seleccionar</label>
+				<label type="button" class="btn btn-danger" ng-click="vm.activaSeleccionar()" ng-show="vm.results.c">Seleccionar</label>
 				<label type="button" class="btn btn-warning" ng-click="vm.removeSelects()" ng-show="vm.seleccionadosResults.length > 0">Remove</label>
 				<label type="button" class="btn btn-default" data-toggle="modal" data-target="#modalUnion" ng-show="vm.seleccionadosResults.length > 1">Union</label>
 				<label type="button" class="btn btn-spade" ng-click="">Deshacer</label>
@@ -67,6 +67,7 @@
 			<p>sumaSeleccionados: {{vm.porcSeleccionados}}</p>
 			<p>mensaje post: {{vm.messagePost}}</p>
 			<p>nameUnion: {{vm.nameUnion}}</p>
+			<p>vm results: {{vm.resuts.c}}</p>
 		</div>
 
 <!-- MODAL UNION -->
