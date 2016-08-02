@@ -60,8 +60,8 @@
 			<div class="btn-group-vertical">
 				<label type="button" class="btn btn-info" ng-click="vm.calcula()" ng-show="!vm.autoCalculate">Calcular</label>
 				<label type="button" class="btn btn-danger" ng-click="vm.activaSeleccionar()">Seleccionar</label>
-				<label type="button" class="btn btn-warning" ng-click="vm.removeSelects()" ng-show="vm.activateOperations">Remove</label>
-				<label type="button" class="btn btn-default" data-toggle="modal" data-target="#modalUnion" ng-show="vm.activateOperations">Union</label>
+				<label type="button" class="btn btn-warning" ng-click="vm.removeSelects()" ng-show="vm.seleccionadosResults.length > 0">Remove</label>
+				<label type="button" class="btn btn-default" data-toggle="modal" data-target="#modalUnion" ng-show="vm.seleccionadosResults.length > 1">Union</label>
 				<label type="button" class="btn btn-spade" ng-click="">Deshacer</label>
 			</div>
 			<p>sumaSeleccionados: {{vm.porcSeleccionados}}</p>

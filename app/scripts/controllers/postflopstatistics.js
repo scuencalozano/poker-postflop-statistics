@@ -60,7 +60,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	    roundCorners: true
 	};
 
-	var seleccionados = [];
+	vm.seleccionadosResults = [];
 	var padreSeleccionados;
 
  	vm.cambiaTipoPlayer = cambiaTipoPlayer;
@@ -109,7 +109,6 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
  	// calculos
  	vm.calcula = calcula;
  	vm.messagePost = '';
- 	vm.activateOperations = false;
 
  	/*
 	 * SEGUN LOS SIGUIENTES ARREGLOS SE DETERMINARA EL ORDEN EN QUE CARGARA EL SLIDER
@@ -543,7 +542,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 		});
 		// los borra cuando desactiva seleccionar
 		if(!seleccionar){
-			seleccionados = [];
+			vm.seleccionadosResults = [];
 			vm.porcSeleccionados = 0;
 		}
 	}
@@ -565,53 +564,51 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
   	result.cCheck = add ? 'state-icon glyphicon glyphicon-check' : 'state-icon glyphicon glyphicon-unchecked';
 
 		if(add){
-			seleccionados.push(result);
+			vm.seleccionadosResults.push(result);
 		}else{
-			seleccionados.splice(seleccionados.indexOf(result), 1);
+			vm.seleccionadosResults.splice(vm.seleccionadosResults.indexOf(result), 1);
 		}
 
 
 		// habilitamos solo el check a sus brothers
-		if(seleccionados.length === 1 && add){
-			vm.activateOperations = true;
+		if(vm.seleccionadosResults.length === 1 && add){
 			vm.results.c.forEach(function (info){
 				activaSeleccionarPrevio(info, result.previo, vm.results);
 			});
 		}
 
 		// activamos a todos para posible seleccion
-		if(seleccionados.length === 0 && !add){
-			vm.activateOperations = false;
+		if(vm.seleccionadosResults.length === 0 && !add){
 			vm.results.c.forEach(function (info){
 				activaSeleccionarNodo(info, true);
 			});
 		}
 		updatePorcSelects();
 
-		console.log((add ? 'agrego: ' : 'borro: ') + result.info, result.porc, seleccionados);
+		console.log((add ? 'agrego: ' : 'borro: ') + result.info, result.porc, vm.seleccionadosResults);
 	}
 
 	function removeSelects(){
 		for(var child = 0; child < padreSeleccionados.c.length; child++){
-			if(seleccionados.indexOf(padreSeleccionados.c[child]) >= 0){
+			if(vm.seleccionadosResults.indexOf(padreSeleccionados.c[child]) >= 0){
 				console.log('va remover: ', padreSeleccionados.c[child].info);
 
 				padreSeleccionados.c.splice(child, 1);
 				child--;
 			}
 		}
-		seleccionados = [];
+		vm.seleccionadosResults = [];
 		updatePorcSelects();
 	}
 
 	var numUnion = 0;
 
 	function union(){
-		console.log('padre: ', padreSeleccionados, ' seleccionados: ', seleccionados);
+		console.log('padre: ', padreSeleccionados, ' seleccionados: ', vm.seleccionadosResults);
 
-		var nodoA = seleccionados[0];
-		for (var i = 1; i < seleccionados.length; i++){
-			var nodoB = seleccionados[i];
+		var nodoA = vm.seleccionadosResults[0];
+		for (var i = 1; i < vm.seleccionadosResults.length; i++){
+			var nodoB = vm.seleccionadosResults[i];
 			nodoA = une (nodoA, nodoB, padreSeleccionados);
 		}
 		padreSeleccionados.c.push(nodoA);
@@ -670,7 +667,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	}
 	function updatePorcSelects(){
 		var sumSeleccionados = 0;
-		seleccionados.forEach(function(el){
+		vm.seleccionadosResults.forEach(function(el){
 			sumSeleccionados += el.porc;
 		});
 		vm.porcSeleccionados = sumSeleccionados;
@@ -691,7 +688,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			case '#dc2127':
 						return 'btn-danger';
 			default:
-				alert('fail: ' + vm.selectedColor);
+				console.log('fail: ' + vm.selectedColor);
 				return 'btn-success';
 		}
 	}
