@@ -70,32 +70,28 @@
 		</div>
 
 <!-- MODAL UNION -->
-<div class="modal fade" id="modalUnion" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+<div class="modal fade bs-example-modal-sm" id="modalUnion" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog  modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Nueva unión</h4>
       </div>
       <div class="modal-body">
-      	<div class="row">
-	      	<input onClick="this.setSelectionRange(0, this.value.length)" value="{{vm.nameUnion}}" ng-model="vm.nameUnion"/>
-				  <div>
-
-				  	<ngjs-color-picker selected-color="vm.selectedColor" options="vm.colorOptions" custom-colors="vm.unionColors"></ngjs-color-picker>
-					  <input type="text" ng-model="vm.selectedColor">
-				  </div>
+      	<div>
+					<input id="inputUnion" onClick="this.setSelectionRange(0, this.value.length)" value="{{vm.nameUnion}}" ng-model="vm.nameUnion"/>
       	</div>
-
-
+      	<div>
+      		<ngjs-color-picker selected-color="vm.selectedColor" options="vm.colorOptions" custom-colors="vm.unionColors"></ngjs-color-picker>
+      	</div>
     </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="vm.union()">Aceptar</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+  </div>
+</div>
 
 	</div>
 </div>

@@ -120,3 +120,16 @@ body {
   position: absolute;
   right: 25px;
 }
+
+#inputUnion{
+  display: block !important;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+ngjs-color-picker{
+  position: relative;
+  left: 10px;
+  top: 10px;
+}
