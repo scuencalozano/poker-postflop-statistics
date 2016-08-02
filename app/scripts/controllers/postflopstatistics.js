@@ -19,6 +19,10 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	/* jshint validthis: true*/
 	var vm = this;
 
+	// si auto se calcula solo cuando haya cambios
+	vm.autoCalculate = true;
+	vm.results = {};
+
 		// si usa solo el slide es igual a tipoPlayer pero sino cambua a custom
  	vm.basado = 'Fish';
  	// al inicio toma el mismo valor de arriba pero luego cambia con el dropDown
@@ -105,6 +109,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
  	// calculos
  	vm.calcula = calcula;
  	vm.messagePost = '';
+ 	vm.activateOperations = false;
 
  	/*
 	 * SEGUN LOS SIGUIENTES ARREGLOS SE DETERMINARA EL ORDEN EN QUE CARGARA EL SLIDER
@@ -171,6 +176,11 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			activaButton(element, card);
 			updatePorcentage(vm.porcentage + getValueCard(card));
 		}
+
+		// mandamos a calcular automaticamente
+		if(vm.autoCalculate){
+			vm.calcula();
+		}
 	}
 
 	// activa o desactiva si es necesario
@@ -212,6 +222,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			$scope.$apply(function (){
 				vm.basado = vm.tipoPlayer;
 				vm.porcentage = 0.0;
+				vm.results = {};
 			});
 			return;
 		}
@@ -238,6 +249,11 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			vm.basado = vm.tipoPlayer;
 			updatePorcentage(newPorcentage);
 		});
+
+		// mandamos a calcular automaticamente
+		if(vm.autoCalculate){
+			vm.calcula();
+		}
 	}
 
 	function getArrayType(tipo){
@@ -346,6 +362,12 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 
 		vm.messagePost = getQuery();
 		console.log(vm.messagePost);
+
+		// cuando no hay ningun seleccionado en el tablero no se calcula
+		if(vm.messagePost === 'y_'){
+			vm.results = {};
+			return;
+		}
 
 	 	var config = {
 	    method:'GET',
@@ -544,8 +566,10 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			seleccionados.splice(seleccionados.indexOf(result), 1);
 		}
 
+
 		// habilitamos solo el check a sus brothers
 		if(seleccionados.length === 1 && add){
+			vm.activateOperations = true;
 			vm.results.c.forEach(function (info){
 				activaSeleccionarPrevio(info, result.previo, vm.results);
 			});
@@ -553,6 +577,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 
 		// activamos a todos para posible seleccion
 		if(seleccionados.length === 0 && !add){
+			vm.activateOperations = false;
 			vm.results.c.forEach(function (info){
 				activaSeleccionarNodo(info, true);
 			});
