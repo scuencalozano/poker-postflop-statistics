@@ -147,13 +147,13 @@ ngjs-color-picker{
 #clearBoard{
   position: relative;
   left: 25%;
-  top: 8px;
+  top: 14px;
   width: 50%;
 }
 
 #buttonType{
   position: relative;
-  top: 8px;
+  top: 18px;
   width: 100%;
   padding-left: 0px;
   padding-right: 0px;
@@ -162,7 +162,11 @@ ngjs-color-picker{
 @media (max-width: 991px) {
   #board{
     width: 70%;
-    margin: 0 auto;
+    left: 15%;
+  }
+
+  .myBlock{
+    margin-top: 40px;
   }
 }
 

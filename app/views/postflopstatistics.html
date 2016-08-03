@@ -30,7 +30,7 @@
 				</div>
 
 				<!-- slider bar tool -->
-				<div class="col-md-9">
+				<div class="col-md-9 myBlock">
 				    <rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-options="vm.slider.options"></rzslider>
 				</div>
 			</div>
@@ -38,7 +38,7 @@
 		</div>
 
 			<!-- BOARD -->
-		<div class="col-md-2" id="board">
+		<div class="col-md-2 myBlock" id="board">
 			<p style="text-align: center;">Select Board</p>
 			<div ng-repeat="column in vm.board">
 				<div class="btn-group-justified">
@@ -49,21 +49,24 @@
 		</div>
 
 			<!-- RESULTS -->
-		<div class="col-md-3">
+		<div class="col-md-3 myBlock">
 			<p style="text-align: center;">Results</p>
+			<p ng-show="!vm.results.c" style="text-align:center;"><br>Please select a hand range to get results.</p>
 			<sc-resultados ng-repeat="result in vm.results.c | orderBy:'fuerza'"></sc-resultados>
 		</div>
 
 			<!-- RESULTS CONTROLES-->
-		<div class="col-md-1">
-			<p style="text-align: center;">Menu</p>
+		<div class="col-md-1 myBlock">
+			<p style="text-align: center;" ng-show="vm.results.c">Info</p>
+				<p style="postion: absolute; width: 200px; text-align: justify;" ng-show="vm.results.c">Click on any potflop-hand to get what happened on the next street, or use select to unite and get the results you need.</p>
 			<div class="btn-group-vertical">
 				<label type="button" class="btn btn-info" ng-click="vm.calcula()" ng-show="!vm.autoCalculate">Calcular</label>
+				<p style="text-align: center;" ng-show="vm.results.c">Options</p>
 				<div class="btn-group" data-toggle="buttons">
-					<label class="btn btn-primary" ng-click="vm.activaSeleccionar(!vm.seleccionar)" ng-show="vm.results.c"><input type="checkbox">Seleccionar</label>
+					<label class="btn btn-primary" ng-click="vm.activaSeleccionar(!vm.seleccionar)" ng-show="vm.results.c"><input type="checkbox">Select</label>
 				</div>
 				<p id="selectsInfo" ng-show="vm.results.c && vm.seleccionar">selects: {{vm.porcSeleccionados}}%</p>
-				<label type="button" class="btn btn-spade" ng-click="vm.removeLastOperacion()" ng-show="vm.operacionesResults.length">Deshacer ({{vm.operacionesResults.length}})</label>
+				<label type="button" class="btn btn-spade" ng-click="vm.removeLastOperacion()" ng-show="vm.operacionesResults.length">Undo Union ({{vm.operacionesResults.length}})</label>
 				<!-- <label type="button" class="btn btn-warning" ng-click="vm.removeSelects()" ng-show="vm.seleccionadosResults.length">Remove</label> -->
 				<label type="button" class="btn btn-default" data-toggle="modal" data-target="#modalUnion" ng-click="vm.evaluateNameUnion()" ng-show="vm.seleccionadosResults.length > 1">Union</label>
 			</div>
