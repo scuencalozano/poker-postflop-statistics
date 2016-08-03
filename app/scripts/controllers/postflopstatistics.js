@@ -25,6 +25,8 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	// sirve para deshacer las operaciones toma el respaldo y aplica operaciones
 	var resultsRespaldo = {};
 
+	vm.mostrados = [];
+	vm.removeLastOperacion = removeLastOperacion;
 	vm.operacionesResults = [];
 		// si usa solo el slide es igual a tipoPlayer pero sino cambua a custom
  	vm.basado = 'Fish';
@@ -38,6 +40,8 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
  	vm.seleccionar = false;
  	vm.activaSeleccionar = activaSeleccionar;
 
+ 	vm.evaluateNameUnion = evaluateNameUnion;
+
  	// board
  	vm.boardActive = [];
  	vm.clickBoard = clickBoard;
@@ -45,7 +49,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
  	vm.desactivaButtonBoard = desactivaButtonBoard;
 
 	// operaciones con los seleccionados
-	vm.porcSeleccionados = 0;
+	vm.porcSeleccionados = 0.0;
 	vm.removeSelects = removeSelects;
 	vm.union = union;
 	vm.nameUnion = 'Union';
@@ -384,9 +388,10 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	  response.success(function(data) {
 	      console.log('data server', data);
 	      vm.results = data;
-	      resultsRespaldo = data;
+	      resultsRespaldo = angular.copy(data);
 	      refactorMessage();
 	      aplicaOperaciones();
+	      activateMostrados();
 	  });
 	}
 
@@ -462,17 +467,22 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	function getActionNodo(nodo){
 		var action = function(){
 			if(nodo.cCheck === ''){
+
         // muestra los hijos y sus hijos
 				nodo.c.forEach(function (child){
 					child.muestra = !child.muestra;
 
 					// oculta los nietos si existen
-					if(typeof child.c !== 'undefined' && !child.muestra){
+					if(typeof child.c !== 'undefined' && child.c.length && !child.muestra){
 						child.c.forEach(function (nieto){
 							nieto.muestra = false;
 						});
+						addRemoveMostrados(child);
 					}
 				});
+
+				// siempre abajo porque evalua el muestra child de un hijo
+				addRemoveMostrados(nodo);
       }else{
         addSeleccion(nodo);
       }
@@ -544,7 +554,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 		// los borra cuando desactiva seleccionar
 		if(!seleccionar){
 			vm.seleccionadosResults = [];
-			vm.porcSeleccionados = 0;
+			vm.porcSeleccionados = 0.0;
 		}
 	}
 
@@ -606,7 +616,11 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 
 	function union(createOperacion){
 
+		// solo es true cuando aceptan el modal
 		if(createOperacion){
+			// soluciona nombre operacion no repetido
+			evaluateNameUnion();
+
 			vm.operacionesResults.push(new OperacionResults(vm.seleccionadosResults, 'union', vm.nameUnion, vm.selectedColor));
 		}
 
@@ -672,11 +686,11 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
     return nodo;
 	}
 	function updatePorcSelects(){
-		var sumSeleccionados = 0;
+		var sumSeleccionados = 0.0;
 		vm.seleccionadosResults.forEach(function(el){
 			sumSeleccionados += el.porc;
 		});
-		vm.porcSeleccionados = sumSeleccionados;
+		vm.porcSeleccionados = Math.round(sumSeleccionados * 100) / 100;
 	}
 
 	function getColorSelectedBtn(){
@@ -718,13 +732,11 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			return;
 		}
 
-		vm.results = resultsRespaldo;
-
 		vm.operacionesResults.forEach(function(operacion){
 
 			// aqui vamos a ejecutar cada operacion
 			vm.seleccionadosResults = [];
-			padreSeleccionados 	= getNodoFromPrevio(operacion.previo);
+			padreSeleccionados 	= getNodoFromCamino(operacion.previo);
 			if(typeof padreSeleccionados === 'undefined'){
 				// el loop sigue solo es como un continues proque es for each function
 				return;
@@ -750,21 +762,18 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	}
 
 	// puede mandar undefined cuando se cambia las cartas y no hay resultados con este previo ojo
-	function getNodoFromPrevio(previo){
-		if(previo === ''){
+	function getNodoFromCamino(camino){
+		if(camino === ''){
 			return vm.results;
 		}
-		var partes 	= previo.split('-');
+		var partes 	= camino.split('-');
 		var aux			= vm.results;
-		console.log('get padre selecccionados', previo, partes, partes.length);
+		console.log('get no de camino:', camino, partes, partes.length);
 		for(var i in partes){
 			aux = getNodoChild(aux, partes[i]);
 			if(typeof aux === 'undefined'){
 				return;
 			}
-			aux.c.forEach(function(child){
-				child.muestra = true;
-			});
 		}
 		return aux;
 	}
@@ -774,6 +783,71 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			if(padre.c[i].info === infoChild){
 				return padre.c[i];
 			}
+		}
+	}
+
+	function addRemoveMostrados(nodo){
+		var muestraNodo = nodo.previo === '' ? nodo.info : nodo.previo + '-' + nodo.info;
+		if(typeof nodo.c[0] === 'undefined'){
+			return;
+		}
+
+		if(nodo.c[0].muestra){
+			vm.mostrados.push(muestraNodo);
+		}else{
+			var posicion = vm.mostrados.indexOf(muestraNodo);
+			if(posicion > -1){
+				console.log('va eliminar: ', muestraNodo, posicion);
+				vm.mostrados.splice(posicion, 1);
+			}
+		}
+	}
+
+	function activateMostrados(){
+		vm.mostrados.forEach(function (camino){
+				var nodo = getNodoFromCamino(camino);
+				if(typeof nodo === 'undefined'){
+					return;
+				}
+				console.log('nodo mostrar:', nodo);
+				nodo.c.forEach(function (child){
+					child.muestra = true;
+				});
+		});
+	}
+
+	function removeLastOperacion(){
+		vm.operacionesResults.pop();
+		console.log('removeeeeeeeeeeeeeeeeeeeeeeee', vm.results, resultsRespaldo);
+		vm.results = angular.copy(resultsRespaldo);
+    refactorMessage();
+    aplicaOperaciones();
+    activateMostrados();
+	}
+
+	// recursivo hasta que no este repetido ojooo
+	function evaluateNameUnion(){
+		if(vm.nameUnion === ''){
+			vm.nameUnion = 'Union';
+		}
+		console.log('va evaluarrrrrrrrrrr');
+
+		var esta = false;
+		vm.operacionesResults.forEach(function(operacion){
+			esta = esta || (operacion.name === vm.nameUnion);
+		});
+
+		if(esta){
+			var lastDigit = vm.nameUnion.substring(vm.nameUnion.length - 1);
+			console.log('last', lastDigit);
+			var num = parseInt(lastDigit);
+			if(isNaN(num)){
+				vm.nameUnion += '_2';
+			}else{
+				console.log('entro como numero: ', num, typeof num);
+				vm.nameUnion = vm.nameUnion.substring(0, vm.nameUnion.length - 1) + (num+1);
+			}
+			evaluateNameUnion();
 		}
 	}
 }

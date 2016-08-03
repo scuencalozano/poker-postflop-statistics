@@ -133,3 +133,7 @@ ngjs-color-picker{
   left: 10px;
   top: 10px;
 }
+
+#selectsInfo{
+  font-size: small;
+}

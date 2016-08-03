@@ -59,15 +59,16 @@
 		<div class="col-md-1">
 			<div class="btn-group-vertical">
 				<label type="button" class="btn btn-info" ng-click="vm.calcula()" ng-show="!vm.autoCalculate">Calcular</label>
-				<label type="button" class="btn btn-danger" ng-click="vm.activaSeleccionar(!vm.seleccionar)" ng-show="vm.results.c">Seleccionar</label>
-				<label type="button" class="btn btn-warning" ng-click="vm.removeSelects()" ng-show="vm.seleccionadosResults.length > 0">Remove</label>
-				<label type="button" class="btn btn-default" data-toggle="modal" data-target="#modalUnion" ng-show="vm.seleccionadosResults.length > 1">Union</label>
-				<label type="button" class="btn btn-spade" ng-click="">Deshacer</label>
+				<div class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary" ng-click="vm.activaSeleccionar(!vm.seleccionar)" ng-show="vm.results.c"><input type="checkbox">Seleccionar</label>
+				</div>
+				<p id="selectsInfo" ng-show="vm.results.c && vm.seleccionar">selects: {{vm.porcSeleccionados}}%</p>
+				<label type="button" class="btn btn-spade" ng-click="vm.removeLastOperacion()" ng-show="vm.operacionesResults.length">Deshacer ({{vm.operacionesResults.length}})</label>
+				<!-- <label type="button" class="btn btn-warning" ng-click="vm.removeSelects()" ng-show="vm.seleccionadosResults.length">Remove</label> -->
+				<label type="button" class="btn btn-default" data-toggle="modal" data-target="#modalUnion" ng-click="vm.evaluateNameUnion()" ng-show="vm.seleccionadosResults.length > 1">Union</label>
 			</div>
-			<p>sumaSeleccionados: {{vm.porcSeleccionados}}</p>
 			<p>mensaje post: {{vm.messagePost}}</p>
-			<p>nameUnion: {{vm.nameUnion}}</p>
-			<p>vm results: {{vm.resuts.c}}</p>
+			<p>mostrados: {{vm.mostrados}}</p>
 			<p>operaciones: {{vm.operacionesResults}}</p>
 		</div>
 
@@ -81,7 +82,7 @@
       </div>
       <div class="modal-body">
       	<div>
-					<input id="inputUnion" onClick="this.setSelectionRange(0, this.value.length)" value="{{vm.nameUnion}}" ng-model="vm.nameUnion"/>
+					<input id="inputUnion" onClick="this.setSelectionRange(0, this.value.length)" value="Union" ng-model="vm.nameUnion"/>
       	</div>
       	<div>
       		<ngjs-color-picker selected-color="vm.selectedColor" options="vm.colorOptions" custom-colors="vm.unionColors"></ngjs-color-picker>
