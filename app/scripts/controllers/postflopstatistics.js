@@ -494,33 +494,33 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	function getName(letra){
 		switch(letra){
 			case 'N':
-				return 'no made';
+				return 'no made hand';
 			case 'NO':
 				return 'overcards';
 			case 'AH':
-				return 'ace hight';
+				return 'ace high';
 			case 'PM':
 				return 'board pair';
 			case 'WP':
 				return 'weak pair';
 			case 'MPB':
-				return 'weak medium pair';
+				return 'weak middle pair';
 			case 'PE':
-				return 'straight projet';
+				return 'draws straight';
 			case 'PC':
-				return 'color project';
+				return 'draws flush';
 			case 'DPB':
 				return 'weak two pair';
 			case 'MPA':
-				return 'hight medium pair';
+				return 'middle pair';
 			case 'TPB':
 				return 'weak top pair';
 			case 'TPA':
-				return 'hight top pair';
+				return 'top pair';
 			case 'O':
 				return 'overpair';
 			case 'DPA':
-				return 'hight two pair';
+				return 'two pair';
 			case 'TT':
 				return 'three kind trip';
 			case 'TS':
