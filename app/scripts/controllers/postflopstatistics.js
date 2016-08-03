@@ -174,7 +174,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 
 	// cambia el estado del button
 	function shuffleButton(element, card){
-		vm.basado = 'custom';
+		vm.basado = 'Custom';
 		if (element.attr('class').indexOf(classSelected) > -1) {
 			desactivaButton(element, card);
 			updatePorcentage(vm.porcentage - getValueCard(card));
@@ -221,12 +221,14 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 		var sliderMin = vm.slider.min;
 		var sliderMax = vm.slider.max;
 
+		vm.basado = vm.tipoPlayer;
+		// lo recalcula luego si es necesario
+		vm.porcentage = 0.0;
+
 		if(sliderMin === sliderMax){
 			arraySlide.forEach(function(el){
 				handlerCard(el, false);
 			});
-			vm.basado = vm.tipoPlayer;
-			vm.porcentage = 0.0;
 			vm.results = {};
 			return;
 		}
@@ -249,7 +251,6 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			handlerCard(el, pasaMin && pasaMax);
 		});
 
-		vm.basado = vm.tipoPlayer;
 		updatePorcentage(newPorcentage);
 
 		// mandamos a calcular automaticamente
@@ -768,7 +769,6 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 		}
 		var partes 	= camino.split('-');
 		var aux			= vm.results;
-		console.log('get no de camino:', camino, partes, partes.length);
 		for(var i in partes){
 			aux = getNodoChild(aux, partes[i]);
 			if(typeof aux === 'undefined'){
@@ -797,7 +797,6 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 		}else{
 			var posicion = vm.mostrados.indexOf(muestraNodo);
 			if(posicion > -1){
-				console.log('va eliminar: ', muestraNodo, posicion);
 				vm.mostrados.splice(posicion, 1);
 			}
 		}
@@ -809,7 +808,6 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 				if(typeof nodo === 'undefined'){
 					return;
 				}
-				console.log('nodo mostrar:', nodo);
 				nodo.c.forEach(function (child){
 					child.muestra = true;
 				});
@@ -818,7 +816,6 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 
 	function removeLastOperacion(){
 		vm.operacionesResults.pop();
-		console.log('removeeeeeeeeeeeeeeeeeeeeeeee', vm.results, resultsRespaldo);
 		vm.results = angular.copy(resultsRespaldo);
     refactorMessage();
     aplicaOperaciones();
@@ -830,8 +827,6 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 		if(vm.nameUnion === ''){
 			vm.nameUnion = 'Union';
 		}
-		console.log('va evaluarrrrrrrrrrr');
-
 		var esta = false;
 		vm.operacionesResults.forEach(function(operacion){
 			esta = esta || (operacion.name === vm.nameUnion);
@@ -844,7 +839,6 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			if(isNaN(num)){
 				vm.nameUnion += '_2';
 			}else{
-				console.log('entro como numero: ', num, typeof num);
 				vm.nameUnion = vm.nameUnion.substring(0, vm.nameUnion.length - 1) + (num+1);
 			}
 			evaluateNameUnion();

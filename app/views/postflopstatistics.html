@@ -6,7 +6,7 @@
 		<!-- tablero -->
 		<div class="col-md-6">
 
-			<p>TABLERO: basado: {{vm.basado}} porcent	age: {{vm.porcentage}} %</p>
+			<p>Range hands: <span style="color: red;">{{vm.basado}}</span> selected: {{vm.porcentage}}%</p>
 			<!-- buttons tablero -->
 			<div ng-repeat="column in vm.matrix">
 				<div class="btn-group-justified">
@@ -18,7 +18,7 @@
 				<!-- select type basado -->
 				<div class="col-md-3">
 					<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle"
+						<button id="buttonType" class="btn btn-secondary dropdown-toggle"
 							type="button" id="dropdownTypePlayer" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false">
 							{{vm.tipoPlayer}}
@@ -39,24 +39,24 @@
 
 			<!-- BOARD -->
 		<div class="col-md-2" id="board">
-			<p>
-				board
-				<label type="button" class="btn btn-warning" ng-click="vm.clearBoard()" ng-show="vm.boardActive.length">Clear</label>
-			</p>
+			<p style="text-align: center;">Select Board</p>
 			<div ng-repeat="column in vm.board">
 				<div class="btn-group-justified">
 					<sc-button-board ng-repeat="row in column" card="{{vm.board[$parent.$index][$index]}}"></sc-button-board>
 				</div>
 			</div>
+			<label type="button" id="clearBoard" class="btn btn-warning" ng-click="vm.clearBoard()" ng-show="vm.boardActive.length">Clear</label>
 		</div>
 
 			<!-- RESULTS -->
 		<div class="col-md-3">
+			<p style="text-align: center;">Results</p>
 			<sc-resultados ng-repeat="result in vm.results.c | orderBy:'fuerza'"></sc-resultados>
 		</div>
 
 			<!-- RESULTS CONTROLES-->
 		<div class="col-md-1">
+			<p style="text-align: center;">Menu</p>
 			<div class="btn-group-vertical">
 				<label type="button" class="btn btn-info" ng-click="vm.calcula()" ng-show="!vm.autoCalculate">Calcular</label>
 				<div class="btn-group" data-toggle="buttons">
@@ -67,9 +67,9 @@
 				<!-- <label type="button" class="btn btn-warning" ng-click="vm.removeSelects()" ng-show="vm.seleccionadosResults.length">Remove</label> -->
 				<label type="button" class="btn btn-default" data-toggle="modal" data-target="#modalUnion" ng-click="vm.evaluateNameUnion()" ng-show="vm.seleccionadosResults.length > 1">Union</label>
 			</div>
-			<p>mensaje post: {{vm.messagePost}}</p>
+<!-- 			<p>mensaje post: {{vm.messagePost}}</p>
 			<p>mostrados: {{vm.mostrados}}</p>
-			<p>operaciones: {{vm.operacionesResults}}</p>
+			<p>operaciones: {{vm.operacionesResults}}</p> -->
 		</div>
 
 <!-- MODAL UNION -->

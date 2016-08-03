@@ -51,6 +51,12 @@ body {
   padding: 14px 24px;
 }
 
+/*tablero rango manos*/
+label[card]{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;
@@ -136,4 +142,19 @@ ngjs-color-picker{
 
 #selectsInfo{
   font-size: small;
+}
+
+#clearBoard{
+  position: relative;
+  left: 25%;
+  top: 8px;
+  width: 50%;
+}
+
+#buttonType{
+  position: relative;
+  top: 8px;
+  width: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
 }
