@@ -5,6 +5,6 @@
 		<span class="resultPorcentage">{{result.porc}}%</span>
 	</label>
 	<span ng-if="result.c.length">
-		<sc-resultados ng-repeat="result in result.c | orderBy:'fuerza'"></sc-resultados>
+		<sc-resultados ng-repeat="result in result.c | orderBy:vm.orderby"></sc-resultados>
 	</span>
 </div>

@@ -48,6 +48,10 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 
  	vm.evaluateNameUnion = evaluateNameUnion;
 
+ 	// por defecto
+	vm.orderby = 'fuerza';
+	vm.setOrderby = setOrderby;
+
  	// board
  	vm.boardActive = [];
  	vm.clickBoard = clickBoard;
@@ -59,7 +63,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	vm.removeSelects = removeSelects;
 	vm.union = union;
 	vm.nameUnion = 'Union';
-	vm.selectedColor = '#7bd148';
+	vm.selectedColor = '#dc2127';
   vm.unionColors =  [
       '#7bd148', 	// verde
       '#46d6db',	// azul
@@ -847,6 +851,15 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 				vm.nameUnion = vm.nameUnion.substring(0, vm.nameUnion.length - 1) + (num+1);
 			}
 			evaluateNameUnion();
+		}
+	}
+
+	function setOrderby(order){
+		var posicion = vm.orderby.indexOf(order);
+		if(posicion > -1){
+			vm.orderby = posicion === 0 ? '-' + order : order;
+		}else{
+			vm.orderby = order;
 		}
 	}
 }
