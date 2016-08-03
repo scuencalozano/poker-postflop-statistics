@@ -25,6 +25,12 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	// sirve para deshacer las operaciones toma el respaldo y aplica operaciones
 	var resultsRespaldo = {};
 
+
+	var typeFlop 	= 'btn-info';
+	var typeTurn 	= 'btn-success';
+	var typeRiver = '';
+
+
 	vm.mostrados = [];
 	vm.removeLastOperacion = removeLastOperacion;
 	vm.operacionesResults = [];
@@ -445,7 +451,6 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 		});
 	}
 
-
 	// recursive update de info of nodo
 	function updateNodo(nodo, total, estado, previo){
 		var infos 				= nodo.i.split('_');
@@ -455,7 +460,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 		nodo.fuerza 			= ordenPost.indexOf(infos[0]);
 		nodo.estado 			= estado;
 		nodo.cCheck 			= '';
-		nodo.typeButton 	= estado === 'flop' ? 'btn-info' : estado === 'turn' ? 'btn-danger' : 'btn-warning';
+		nodo.typeButton 	= estado === 'flop' ? typeFlop : estado === 'turn' ? typeTurn : typeRiver;
     nodo.previo 			= previo;
     nodo.muestra 			= estado === 'flop';
     nodo.click 				= getActionNodo(nodo);
