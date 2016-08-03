@@ -158,3 +158,30 @@ ngjs-color-picker{
   padding-left: 0px;
   padding-right: 0px;
 }
+
+@media (max-width: 991px) {
+  #board{
+    width: 70%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  label[card]{
+        font-size: 0.8em;
+  }
+}
+
+@media (max-width: 440px) {
+  label[card]{
+        font-size: 0.6em;
+  }
+}
+
+@media (max-width: 300px) {
+  label[card]{
+        font-size: 0.4em;
+  }
+}
+
+
