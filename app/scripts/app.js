@@ -18,8 +18,9 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'views/postflopstatistics.html',
+        controller: 'PostflopstatisticsCtrl',
+        controllerAs: 'vm'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
@@ -31,6 +32,6 @@ angular
         controllerAs: 'vm'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/postflopStatistics'
       });
   });

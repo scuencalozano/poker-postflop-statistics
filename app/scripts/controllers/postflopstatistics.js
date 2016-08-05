@@ -227,7 +227,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	// actualiza el tablero segun los valores del slide y del tipoPlater
 	function updateButtons() {
 
-		console.log('updateButtons', arraySlide);
+		// console.log('updateButtons', arraySlide);
 		var sliderMin = vm.slider.min;
 		var sliderMax = vm.slider.max;
 
@@ -378,7 +378,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	function calcula(){
 
 		vm.messagePost = getQuery();
-		console.log(vm.messagePost);
+		// console.log(vm.messagePost);
 
 		// cuando no hay ningun seleccionado en el tablero no se calcula, evita tambien y_5h4d
 		if(vm.messagePost.indexOf('y_') > -1){
@@ -388,7 +388,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 
 	 	var config = {
 	    method:'GET',
-	    url:'http://192.168.1.8:8084/RestService/webresources/service/calcula',
+	    url:'http://santiagocuenca.ddns.net:5631/RestService/webresources/service/calcula',
 	    params: {
 	    		message: vm.messagePost
 	    }
@@ -397,7 +397,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	  var response = $http(config);
 
 	  response.success(function(data) {
-	      console.log('data server', data);
+	      // console.log('data server', data);
 	      vm.results = data;
 	      resultsRespaldo = angular.copy(data);
 	      refactorMessage();
@@ -606,14 +606,12 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 		}
 		updatePorcSelects();
 
-		console.log((add ? 'agrego: ' : 'borro: ') + result.info, result.porc, vm.seleccionadosResults);
+		// console.log((add ? 'agrego: ' : 'borro: ') + result.info, result.porc, vm.seleccionadosResults);
 	}
 
 	function removeSelects(){
 		for(var child = 0; child < padreSeleccionados.c.length; child++){
 			if(vm.seleccionadosResults.indexOf(padreSeleccionados.c[child]) >= 0){
-				console.log('va remover: ', padreSeleccionados.c[child].info);
-
 				padreSeleccionados.c.splice(child, 1);
 				child--;
 			}
@@ -634,7 +632,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			vm.operacionesResults.push(new OperacionResults(vm.seleccionadosResults, 'union', vm.nameUnion, vm.selectedColor));
 		}
 
-		console.log('padre: ', padreSeleccionados, ' seleccionados: ', vm.seleccionadosResults);
+		// console.log('padre: ', padreSeleccionados, ' seleccionados: ', vm.seleccionadosResults);
 
 		var nodoA = vm.seleccionadosResults[0];
 		for (var i = 1; i < vm.seleccionadosResults.length; i++){
@@ -756,7 +754,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			operacion.infoNodos.forEach(function(infoNodo){
 					var newChild = getNodoChild(padreSeleccionados, infoNodo);
 					if(typeof newChild !== 'undefined'){
-						console.log('guardo vm selecccioneados results:', newChild, typeof newChild);
+						// console.log('guardo vm selecccioneados results:', newChild, typeof newChild);
 						vm.seleccionadosResults.push(newChild);
 					}
 			});
@@ -843,7 +841,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 
 		if(esta){
 			var lastDigit = vm.nameUnion.substring(vm.nameUnion.length - 1);
-			console.log('last', lastDigit);
+			// console.log('last', lastDigit);
 			var num = parseInt(lastDigit);
 			if(isNaN(num)){
 				vm.nameUnion += '_2';
