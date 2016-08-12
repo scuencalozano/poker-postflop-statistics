@@ -386,18 +386,13 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			return;
 		}
 
-	 	var config = {
-	    method:'GET',
-	    url:'http://santiagocuenca.ddns.net:5631/RestService/webresources/service/calcula',
-	    params: {
-	    		message: vm.messagePost
-	    }
-	  };
-
-	  var response = $http(config);
+	  var response = $http.post('http://52.207.184.94/service/calcula', vm.messagePost);
 
 	  response.success(function(data) {
 	      // console.log('data server', data);
+	      if(data === ''){
+	      	return;
+	      }
 	      vm.results = data;
 	      resultsRespaldo = angular.copy(data);
 	      refactorMessage();
