@@ -37,22 +37,22 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	vm.orderby = 'fuerza';
 
 	// tablero
-	vm.shuffleButton 		= shuffleButton;
- 	vm.desactivaButton 		= desactivaButton;
- 	vm.cambiaTipoPlayer 	= cambiaTipoPlayer;
- 	vm.porcentage 			= 0.0;
+	vm.shuffleButton = shuffleButton;
+ 	vm.desactivaButton = desactivaButton;
+ 	vm.cambiaTipoPlayer = cambiaTipoPlayer;
+ 	vm.porcentage = 0.0;
 
  	// board
- 	vm.boardActive 			= [];
- 	vm.clickBoard 			= clickBoard;
- 	vm.clearBoard 			= clearBoard;
+ 	vm.boardActive = [];
+ 	vm.clickBoard	= clickBoard;
+ 	vm.clearBoard	= clearBoard;
  	vm.desactivaButtonBoard = desactivaButtonBoard;
 
  	// resultados
-	vm.results 				= {};
-	vm.mostrados 			= [];
- 	vm.messagePost 			= '';
-	vm.setOrderby 			= setOrderby;
+	vm.results = {};
+	vm.mostrados = [];
+ 	vm.messagePost = '';
+	vm.setOrderby = setOrderby;
 
 	// operaciones con los seleccionados
  	vm.seleccionar 			= false; // seleccionar always false by default

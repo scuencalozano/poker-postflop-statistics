@@ -18,15 +18,14 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/postflopstatistics.html',
-        controller: 'PostflopstatisticsCtrl',
-        controllerAs: 'vm'
+        templateUrl: 'views/about.html',
+        controller: 'AboutCtrl'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
-      .when('/postflopStatistics', {
+      .when('/postflop-statistics', {
         templateUrl: 'views/postflopstatistics.html',
         controller: 'PostflopstatisticsCtrl',
         controllerAs: 'vm'

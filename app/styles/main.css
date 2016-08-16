@@ -188,4 +188,12 @@ ngjs-color-picker{
   }
 }
 
+.Three-Dee{
+  font-family: ABeeZee ;
+  text-align: center;
+  line-height: 1em;
+  color: #c90000;
+  font-size: 57px;
+  text-shadow:0px 0px 0 rgb(87,-114,-114),1px 1px 0 rgb(26,-175,-175), 2px 2px 0 rgb(-35,-236,-236),3px 3px 2px rgba(0,0,0,0.45),3px 3px 1px rgba(0,0,0,0.5),0px 0px 2px rgba(0,0,0,.2);
+}
 
