@@ -7,21 +7,21 @@
  * # scButton
  */
  angular.module('postflopStatisticsApp')
- .directive('scButton', function () {
- 	return {
- 		template: '<label type="button" ng-click="click()"></label>',
- 		restrict: 'E',
- 		replace: true,
- 		link: function postLink(scope, element, attrs) {
+	.directive('scButton', function () {
+		return {
+			template: '<label type="button" ng-click="click()"></label>',
+			restrict: 'E',
+			replace: true,
+			link: function postLink(scope, element, attrs) {
 
- 			var card = attrs.card;
- 			element.text(card);
- 			element.attr('id', 'card' + card);
- 			scope.vm.desactivaButton(element, card);
+				var card = attrs.card;
+				element.text(card);
+				element.attr('id', 'card' + card);
+				scope.vm.desactivaButton(element, card);
 
- 			scope.click = function(){
- 				scope.vm.shuffleButton(element, card);
- 			};
- 		}
- 	};
+				scope.click = function(){
+					scope.vm.shuffleButton(element, card);
+				};
+			}
+	};
  });
