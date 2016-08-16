@@ -22,22 +22,21 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
  		$scope.$apply(updateButtons);
  	});
 
-	var resultsRespaldo 	= {}; 		// sirve para deshacer las operaciones toma el respaldo y aplica operaciones
-	var typeFlop 			= 'btn-info';
-	var typeTurn 			= 'btn-success';
-	var typeRiver 			= '';
-	var numUnion 			= 0;
- 	var arraySlide 			= getArrayType(vm.tipoPlayer);
-	var classSelected 		= 'btn-warning';
+	var resultsRespaldo = {}; 		// sirve para deshacer las operaciones toma el respaldo y aplica operaciones
+	var typeFlop = 'btn-info';
+	var typeTurn = 'btn-success';
+	var typeRiver = '';
+	var numUnion = 0;
+	var classSelected = 'btn-warning';
 	var padreSeleccionados;
 
 	// config
-	vm.autoCalculate 		= true; 		// si auto se calcula solo cuando haya cambios
-	vm.basado 				= 'Fish'; 	// si usa solo el slide es igual a tipoPlayer pero sino cambua a custom
-	vm.orderby 				= 'fuerza';
+	vm.autoCalculate = true; 		// si auto se calcula solo cuando haya cambios
+	vm.basado = 'Fish'; 	// si usa solo el slide es igual a tipoPlayer pero sino cambua a custom
+ 	vm.tipoPlayer = vm.basado; 	// al inicio toma el mismo valor de arriba pero luego cambia con el dropDown
+	vm.orderby = 'fuerza';
 
 	// tablero
- 	vm.tipoPlayer 			= vm.basado; 	// al inicio toma el mismo valor de arriba pero luego cambia con el dropDown
 	vm.shuffleButton 		= shuffleButton;
  	vm.desactivaButton 		= desactivaButton;
  	vm.cambiaTipoPlayer 	= cambiaTipoPlayer;
@@ -139,6 +138,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	var ordenABCFO 		= ['AA', 'KK', 'AKs', 'QQ', 'AKo', 'AQs', 'AQo', 'AJs', 'AJo', 'KQs', 'KQo', 'ATs', 'ATo', 'JJ', 'KJs', 'KJo', 'TT', '99', 'QJs', 'QJo', '88', '77', 'JTs', 'JTo', 'A9s', 'A9o', 'KTs', 'KTo', '66', 'QTs', 'QTo', '55', 'A8s', 'A8o', '44', '33', 'A7s', 'A7o', '22', 'A5s', 'A5o', 'A6s', 'A6o', 'T9s', 'T9o', 'A4s', 'A4o', 'A3s', '98s', 'K9s', 'K9o', '76s', 'J9s', 'A2s', '87s', 'J9o', 'A3o', 'Q9s', 'A2o', 'T8s', 'Q9o', '98o', 'K8s', '65s', '97s', 'J8s', 'K7s', '87o', 'Q8s', '54s', '86s', 'K8o', 'J8o', 'T8o', '76o', '75s', 'K6s', 'T7s', '43s', '64s', 'Q8o', 'Q7s', '96s', '65o', 'K7o', 'J7s', 'K5s', 'Q6s', 'K4s', 'K3s', '97o', '85s', '86o', 'K6o', 'Q7o', '74s', '53s', 'K2s', 'Q5s', 'J7o', 'K5o', 'T7o', 'T6s', '54o', 'J6s', '63s', '32s', 'K4o', 'J5s', 'J4s', '95s', 'Q4s', '42s', '43o', '75o', 'J3s', 'K3o', 'T5s', 'Q3s', '84s', 'Q6o', '64o', '96o', 'Q5o', 'J2s', 'Q2s', 'T4s', 'T6o', '52s', '53o', '94s', 'K2o', '85o', 'Q4o', '62s', '73s', '93s', 'T2s', 'J4o', 'Q3o', '32o', '95o', 'J5o', '72s', 'T5o', '72o', 'T3s', 'Q2o', '92s', 'J6o', '52o', '82s', '63o', '84o', 'T4o', '94o', 'T3o', 'J2o', '42o', '83s', '73o', '83o', '92o', 'J3o', '74o', 'T2o', '93o', '82o', '62o'];
 	var ordenDice 		= ['AA', 'KK', 'AKs', 'QQ', 'AKo', 'AJs', 'AJo', 'AQs', 'AQo', 'ATs', 'ATo', 'KJs', 'QJs', 'KJo', 'QJo', 'KQs', 'JJ', 'KQo', 'TT', 'A9s', 'A9o', 'A8s', 'JTs', 'A8o', 'JTo', 'QTs', 'QTo', 'KTs', 'A5s', 'KTo', 'A5o', '99', '88', 'A7s', 'A7o', 'A6s', 'A6o', 'T9s', 'T9o', '77', 'J9s', 'J9o', '98s', '98o', 'A3s', 'A3o', 'A4s', 'A4o', 'K9s', 'K9o', '66', '55', 'Q9s', 'Q9o', '87s', '87o', 'A2s', 'A2o', '44', '33', '22', '97s', '97o', 'K8s', '76s', 'K8o', '76o', 'T8s', 'T8o', 'K7s', 'K7o', 'J8s', 'J8o', 'Q8s', 'Q8o', '65s', '65o', 'K5s', '96s', 'K5o', '96o', '86s', '86o', 'K6s', 'Q7s', '54s', 'K2s', 'K2o', '54o', 'Q7o', 'T7s', 'K6o', '64s', 'T7o', 'K3s', 'K3o', '75s', 'T6s', '53s', 'T6o', '75o', '64o', '95s', 'K4s', '43s', 'K4o', '43o', '85s', 'Q6s', 'Q6o', 'J7s', 'Q5s', 'Q4s', 'J6s', 'Q5o', 'Q4o', 'J5s', 'J5o', 'J6o', '74s', '85o', '95o', 'Q3s', 'Q3o', 'J7o', '63s', 'Q2s', 'Q2o', '84s', 'T3s', '63o', 'T4s', 'T2s', '94s', '42s', '42o', '52s', '52o', 'J3s', '32s', 'J4s', '53o', 'T5s', 'J4o', 'T5o', '32o', '62s', '83s', '84o', '62o', '74o', 'T3o', '73s', '73o', '92s', '82s', '82o', 'J2s', 'J2o', 'J3o', '93s', 'T2o', 'T4o', '72s', '94o', '72o', '83o', '92o', '93o'];
 	var ordenFish 		= ['AA', 'KK', 'AKs', 'QQ', 'AKo', 'AJs', 'AJo', 'AQs', 'AQo', 'KQs', 'KQo', 'ATs', 'ATo', 'KJs', 'KJo', 'KTs', 'KTo', 'A9s', 'A9o', 'JTs', 'JTo', 'QJs', 'QJo', 'QTs', 'QTo', 'A8s', 'A8o', 'JJ', 'TT', '99', 'A7s', 'A7o', 'A6s', 'A6o', 'A5s', 'A5o', 'Q9s', 'Q9o', 'T9s', '88', 'T9o', '77', 'K9s', 'K9o', 'A4s', 'A4o', '66', 'A3s', 'A3o', 'J9s', 'J9o', '98s', '98o', '55', 'A2s', 'A2o', '44', '33', '87s', '87o', 'K8s', 'K8o', '22', 'T8s', 'T8o', 'Q8s', 'Q8o', 'J8s', 'J8o', '76s', '76o', 'K7s', 'K7o', 'K6s', 'K6o', '65s', '65o', '97s', '97o', '86s', '86o', 'K5s', '54s', '54o', 'K5o', 'Q7s', 'Q7o', 'T7s', 'T7o', 'J7s', 'J7o', 'K4s', 'K4o', 'Q6s', '75s', '75o', '96s', '64s', 'K3s', 'K3o', 'Q6o', 'Q5s', 'K2s', 'K2o', 'J4s', '96o', 'Q5o', 'J5s', '85s', '85o', '64o', '95s', 'J6s', 'T6s', '43s', '43o', 'Q4s', 'J6o', '53o', '53s', 'J3s', '74s', 'J2s', 'Q3s', '32s', '32o', '52s', 'J5o', '42s', 'Q4o', 'T5s', 'Q2s', 'T6o', '84s', 'T3s', 'T4s', '63s', 'Q2o', 'Q3o', '94s', 'J2o', 'J4o', 'T2s', 'J3o', '73s', '84o', '93s', '74o', '63o', '83s', '95o', '72s', 'T5o', '42o', '52o', '62s', '73o', '92s', 'T2o', 'T4o', '94o', '93o', '82s', 'T3o', '83o', '62o', '72o', '92o', '82o'];
+ 	var arraySlide = getArrayType(vm.basado); // toma el valor de una de las variables orden segun el vm.basado
 
 
  	/**
@@ -228,7 +228,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	// actualiza el tablero segun los valores del slide y del tipoPlater
 	function updateButtons() {
 
-		// console.log('updateButtons', arraySlide);
+		console.log('updateButtons', arraySlide);
 		var sliderMin = vm.slider.min;
 		var sliderMax = vm.slider.max;
 
