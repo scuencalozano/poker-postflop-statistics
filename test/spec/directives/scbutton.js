@@ -20,6 +20,5 @@ describe('Directive: scButton', function () {
     element = $compile(element)(scope);
     scope.$digest();
     expect(element.text()).toBe(scope.card1);
-    // expect(element.hasClass('btn-success')).toBe(true);
   }));
 });

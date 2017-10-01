@@ -378,12 +378,12 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 
 		var response = $http.post('http://52.207.184.94/service/calcula', vm.messagePost);
 
-		response.success(function(data) {
-			if(data === ''){
+		response.then(function(resp) {
+			if (resp.data === ''){
 				return;
 			}
-			vm.results = data;
-			resultsRespaldo = angular.copy(data);
+			vm.results = resp.data;
+			resultsRespaldo = angular.copy(resp.data);
 			refactorMessage();
 			aplicaOperaciones();
 			activateMostrados();

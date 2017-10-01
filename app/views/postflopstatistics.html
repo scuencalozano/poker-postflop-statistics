@@ -1,120 +1,102 @@
-
-
-
 <div class="container-fluid" >
-	<div class="row">
-		<!-- tablero -->
-		<div class="col-md-6">
-
-			<p>Range hands: <span style="color: red;">{{vm.basado}}</span> selected: {{vm.porcentage}}%</p>
-			<!-- buttons tablero -->
-			<div ng-repeat="column in vm.matrix">
-				<div class="btn-group-justified">
-					<sc-button ng-repeat="row in column" card="{{vm.matrix[$parent.$index][$index]}}"></sc-button>
-				</div>
-			</div>
-
-			<div class="row">
-				<!-- select type basado -->
-				<div class="col-md-3">
-					<div class="dropdown">
-						<button id="buttonType" class="btn btn-secondary dropdown-toggle"
-							type="button" id="dropdownTypePlayer" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">
-							{{vm.tipoPlayer}}
-						</button>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							<a ng-repeat="tipo in vm.typesPlayer" class="dropdown-item" ng-click="vm.cambiaTipoPlayer(tipo)">  {{tipo}} </a>
-						</div>
-					</div>
-				</div>
-
-				<!-- slider bar tool -->
-				<div class="col-md-9 myBlock">
-				    <rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-options="vm.slider.options"></rzslider>
-				</div>
-			</div>
-
-		</div>
-
-			<!-- BOARD -->
-		<div class="col-md-2 myBlock" id="board">
-			<p style="text-align: center;">Select board</p>
-			<div ng-repeat="column in vm.board">
-				<div class="btn-group-justified">
-					<sc-button-board ng-repeat="row in column" card="{{vm.board[$parent.$index][$index]}}"></sc-button-board>
-				</div>
-			</div>
-			<label type="button" id="clearBoard" class="btn btn-warning" ng-click="vm.clearBoard()" ng-show="vm.boardActive.length">Clear</label>
-		</div>
-
-			<!-- RESULTS -->
-		<div class="col-md-3 myBlock">
-			<p style="text-align: center;">Results</p>
-			<p ng-show="!vm.results.c" style="text-align:center;"><br>Please select a hand range to get results.</p>
-			<sc-resultados ng-repeat="result in vm.results.c | orderBy:vm.orderby"></sc-resultados>
-		</div>
-
-			<!-- RESULTS CONTROLES-->
-		<div class="col-md-1 myBlock">
-			<p style="text-align: left;" ng-show="vm.results.c">Info</p>
-				<p style="postion: absolute; width: 200px; text-align: justify;" ng-show="vm.results.c">Click on any potflop-hand to get what happened on the next street (
-				<span style="color:#46d6db">Flop</span> <span style="color:#7bd148">Turn</span> <span style="color:#BCBCBC">River</span>
-				), or use select to unite and get the results you need.</p>
-			<div class="btn-group-vertical">
-				<label type="button" class="btn btn-info" ng-click="vm.calcula()" ng-show="!vm.autoCalculate">Calcular</label>
-				<p style="text-align: left;" ng-show="vm.results.c">Options:</p>
-
-					<!-- SORT BY -->
-				<div class="btn dropup" ng-show="vm.results.c">
-				  <button class="btn btn-secondary dropdown-toggle"
-				          type="button" id="dropdownMenu1" data-toggle="dropdown"
-				          aria-haspopup="true" aria-expanded="false">
-				    SORT BY
-				  </button>
-				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				    <li><a class="dropdown-item" ng-click="vm.setOrderby('fuerza')">Strength</a></li>
-				    <li><a class="dropdown-item" ng-click="vm.setOrderby('porc')">Percentage</a></li>
-				  </ul>
-				</div>
-
-
-				<div class="btn-group" data-toggle="buttons">
-					<label class="btn btn-primary" ng-click="vm.activaSeleccionar(!vm.seleccionar)" ng-show="vm.results.c"><input type="checkbox">Select</label>
-				</div>
-				<p id="selectsInfo" ng-show="vm.results.c && vm.seleccionar">selects: {{vm.porcSeleccionados}}%</p>
-				<label type="button" class="btn btn-success" data-toggle="modal" data-target="#modalUnion" ng-show="vm.seleccionadosResults.length > 1" ng-click="vm.evaluateNameUnion()">Union</label>
-				<label type="button" class="btn btn-spade" ng-click="vm.removeLastOperacion()" ng-show="vm.operacionesResults.length">Undo Union ({{vm.operacionesResults.length}})</label>
-				<!-- <label type="button" class="btn btn-warning" ng-click="vm.removeSelects()" ng-show="vm.seleccionadosResults.length">Remove</label> -->
-			</div>
-<!-- 			<p>mensaje post: {{vm.messagePost}}</p>
-			<p>mostrados: {{vm.mostrados}}</p>
-			<p>operaciones: {{vm.operacionesResults}}</p> -->
-		</div>
-
-<!-- MODAL UNION -->
-<div class="modal fade bs-example-modal-sm" id="modalUnion" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  <div class="modal-dialog  modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">New union</h4>
+   <div class="row">
+      <!-- tablero -->
+      <div class="col-md-6">
+         <p>Range hands: <span style="color: red;">{{vm.basado}}</span> selected: {{vm.porcentage}}%</p>
+         <!-- buttons tablero -->
+         <div ng-repeat="column in vm.matrix">
+            <div class="btn-group-justified">
+               <sc-button ng-repeat="row in column" card="{{vm.matrix[$parent.$index][$index]}}"></sc-button>
+            </div>
+         </div>
+         <div class="row">
+            <!-- select type basado -->
+            <div class="col-md-3">
+               <div class="dropdown">
+                  <button id="buttonType" class="btn btn-secondary dropdown-toggle"
+                     type="button" id="dropdownTypePlayer" data-toggle="dropdown"
+                     aria-haspopup="true" aria-expanded="false">
+                  {{vm.tipoPlayer}}
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                     <a ng-repeat="tipo in vm.typesPlayer" class="dropdown-item" ng-click="vm.cambiaTipoPlayer(tipo)">  {{tipo}} </a>
+                  </div>
+               </div>
+            </div>
+            <!-- slider bar tool -->
+            <div class="col-md-9 myBlock">
+               <rzslider rz-slider-model="vm.slider.min" rz-slider-high="vm.slider.max" rz-slider-options="vm.slider.options"></rzslider>
+            </div>
+         </div>
       </div>
-      <div class="modal-body">
-      	<div>
-					<input id="inputUnion" onClick="this.setSelectionRange(0, this.value.length)" value="Union" ng-model="vm.nameUnion"/>
-      	</div>
-      	<div>
-      		<ngjs-color-picker selected-color="vm.selectedColor" options="vm.colorOptions" custom-colors="vm.unionColors"></ngjs-color-picker>
-      	</div>
-    </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="vm.union(true)">Ok</button>
+      <!-- BOARD -->
+      <div class="col-md-2 myBlock" id="board">
+         <p style="text-align: center;">Select board</p>
+         <div ng-repeat="column in vm.board">
+            <div class="btn-group-justified">
+               <sc-button-board ng-repeat="row in column" card="{{vm.board[$parent.$index][$index]}}"></sc-button-board>
+            </div>
+         </div>
+         <label type="button" id="clearBoard" class="btn btn-warning" ng-click="vm.clearBoard()" ng-show="vm.boardActive.length">Clear</label>
       </div>
-    </div>
-  </div>
-</div>
-
-	</div>
+      <!-- RESULTS -->
+      <div class="col-md-3 myBlock">
+         <p style="text-align: center;">Results</p>
+         <p ng-show="!vm.results.c" style="text-align:center;"><br>Please select a hand range to get results.</p>
+         <sc-resultados ng-repeat="result in vm.results.c | orderBy:vm.orderby"></sc-resultados>
+      </div>
+      <!-- RESULTS CONTROLES-->
+      <div class="col-md-1 myBlock">
+         <p style="text-align: left;" ng-show="vm.results.c">Info</p>
+         <p style="postion: absolute; width: 200px; text-align: justify;" ng-show="vm.results.c">Click on any potflop-hand to get what happened on the next street (
+            <span style="color:#46d6db">Flop</span> <span style="color:#7bd148">Turn</span> <span style="color:#BCBCBC">River</span>
+            ), or use select to unite and get the results you need.
+         </p>
+         <div class="btn-group-vertical">
+            <label type="button" class="btn btn-info" ng-click="vm.calcula()" ng-show="!vm.autoCalculate">Calcular</label>
+            <p style="text-align: left;" ng-show="vm.results.c">Options:</p>
+            <!-- SORT BY -->
+            <div class="btn dropup" ng-show="vm.results.c">
+               <button class="btn btn-secondary dropdown-toggle"
+                  type="button" id="dropdownMenu1" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+               SORT BY
+               </button>
+               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a class="dropdown-item" ng-click="vm.setOrderby('fuerza')">Strength</a></li>
+                  <li><a class="dropdown-item" ng-click="vm.setOrderby('porc')">Percentage</a></li>
+               </ul>
+            </div>
+            <div class="btn-group" data-toggle="buttons">
+               <label class="btn btn-primary" ng-click="vm.activaSeleccionar(!vm.seleccionar)" ng-show="vm.results.c"><input type="checkbox">Select</label>
+            </div>
+            <p id="selectsInfo" ng-show="vm.results.c && vm.seleccionar">selects: {{vm.porcSeleccionados}}%</p>
+            <label type="button" class="btn btn-success" data-toggle="modal" data-target="#modalUnion" ng-show="vm.seleccionadosResults.length > 1" ng-click="vm.evaluateNameUnion()">Group</label>
+            <label type="button" class="btn btn-spade" ng-click="vm.removeLastOperacion()" ng-show="vm.operacionesResults.length">Undo Group ({{vm.operacionesResults.length}})</label>
+         </div>
+      </div>
+      <!-- MODAL UNION -->
+      <div class="modal fade bs-example-modal-sm" id="modalUnion" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+         <div class="modal-dialog  modal-sm" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">New group</h4>
+               </div>
+               <div class="modal-body">
+                  <div>
+                     <input id="inputUnion" onClick="this.setSelectionRange(0, this.value.length)" value="Union" ng-model="vm.nameUnion"/>
+                  </div>
+                  <div>
+                     <ngjs-color-picker selected-color="vm.selectedColor" options="vm.colorOptions" custom-colors="vm.unionColors"></ngjs-color-picker>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="vm.union(true)">Ok</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>
