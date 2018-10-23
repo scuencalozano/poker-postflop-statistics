@@ -14,6 +14,10 @@ Running `grunt test` will run the unit tests with karma.
 
 DEMO
 ====
-[POSTFLOP STATISTICS](http://santiagocuenca.com/free-apps/postflop-statistics/#/postflop-statistics)
+[POSTFLOP STATISTICS](http://santiagocuenca.com/postflop-statistics/#/postflop-statistics)
 
-Everyone is welcome to contribute to this project
+DEPLOY
+ - grunt build
+ - zip -r poker-postflop-statistics.zip dist && scp poker-postflop-statistics.zip ubuntu@<ip>:/home/ubuntu/proyectos && rm poker-postflop-statistics.zip
+AWS
+ - rm -rf poker-postflop-statistics && unzip poker-postflop-statistics.zip && mv dist poker-postflop-statistics && sudo chmod 775 poker-postflop-statistics && rm poker-postflop-statistics.zip
