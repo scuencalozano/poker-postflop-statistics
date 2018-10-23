@@ -376,7 +376,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			return;
 		}
 
-		var response = $http.post('http://52.207.184.94/service/calcula', vm.messagePost);
+		var response = $http.post('http://35.170.56.146:8080/Postflop/service/calcula', vm.messagePost);
 
 		response.then(function(resp) {
 			if (resp.data === ''){
