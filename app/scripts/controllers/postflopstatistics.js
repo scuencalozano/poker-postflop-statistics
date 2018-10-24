@@ -376,7 +376,7 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 			return;
 		}
 
-		var response = $http.post('http://35.170.56.146:8080/Postflop/service/calcula', vm.messagePost);
+		var response = $http.post('http://www.santiagocuenca.com:8080/Postflop/service/calcula', vm.messagePost);
 
 		response.then(function(resp) {
 			if (resp.data === ''){
