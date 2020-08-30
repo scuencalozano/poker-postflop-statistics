@@ -184,12 +184,12 @@ function PostflopstatisticsCtrl($scope, $document, $http) {
 	}
 
 	function getValueCard(card){
-		return card.length === 2 ? 0.085 : card.indexOf('s') > -1 ?  0.3238 : 0.944;
+		return card.length === 2 ? 0.452 : card.indexOf('s') > -1 ?  0.302 : 0.905;
 	}
 
 	// redondea y soluciona extrañas inesactitudes
 	function updatePorcentage(value){
-		value = Math.round(value * 1000) / 1000;
+		value = Math.round(value * 100) / 100;
 		vm.porcentage = value <= 0.04 ? 0.0 : value >= 99.96 ? 100.0 : value;
 	}
 
